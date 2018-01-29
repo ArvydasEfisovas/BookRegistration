@@ -29,12 +29,16 @@ public class Contact {
         this._phone_number = _phone_number;
         this._email = _email;
     }
-    // getting ID
+
     public int getID(){
         return this._id;
     }
 
-    // setting id
+    // nauja eilute
+
+
+
+
     public void setID(int id){
         this._id = id;
     }

@@ -4,6 +4,9 @@ package com.example.moksleivis.knygalaboras;
  * Created by arvyd on 1/21/2018.
  */
 
+
+
+//pridejau eiluciu
 public class Knyga {
     private int id;
     private String name;
