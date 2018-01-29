@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Knygalaboras</string>
+
+
+
+    <string-array name="rarity_array">
+        <item>Common</item>
+        <item>Uncommon</item>
+        <item>Rare</item>
+
+    </string-array>
+</resources>
