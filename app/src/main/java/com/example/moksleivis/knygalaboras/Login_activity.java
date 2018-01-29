@@ -64,8 +64,8 @@ public class Login_activity extends AppCompatActivity {
 
                    startActivity(new Intent(Login_activity.this, Dashboard_activity.class));
                 }else{
-                   Toast.makeText(getApplicationContext(),
-                           "Toks vartotojas neegzistuoja", Toast.LENGTH_LONG).show();
+                  // Toast.makeText(getApplicationContext(),
+                 //          "Toks vartotojas neegzistuoja", Toast.LENGTH_LONG).show();
                }
 
             }
