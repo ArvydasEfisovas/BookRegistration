@@ -7,6 +7,8 @@ package com.example.moksleivis.knygalaboras;
 
 
 //pridejau eiluciu
+
+    //eilutes
 public class Knyga {
     private int id;
     private String name;

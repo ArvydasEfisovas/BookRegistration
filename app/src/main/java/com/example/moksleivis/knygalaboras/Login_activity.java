@@ -24,8 +24,14 @@ public class Login_activity extends AppCompatActivity {
         setContentView(R.layout.activity_login_activity);
 
 
+// cia tuscia eilute
 
 
+
+
+
+
+        //cia tuscia eilute
 
         mEdit   = (EditText)findViewById(R.id.login_pokemon_name);
         mEdit2   = (EditText)findViewById(R.id.editText);
@@ -64,8 +70,8 @@ public class Login_activity extends AppCompatActivity {
 
                    startActivity(new Intent(Login_activity.this, Dashboard_activity.class));
                 }else{
-                  // Toast.makeText(getApplicationContext(),
-                 //          "Toks vartotojas neegzistuoja", Toast.LENGTH_LONG).show();
+                   Toast.makeText(getApplicationContext(),
+                          "Toks vartotojas neegzistuoja", Toast.LENGTH_LONG).show();
                }
 
             }

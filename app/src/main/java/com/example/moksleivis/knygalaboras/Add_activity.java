@@ -66,7 +66,8 @@ public class Add_activity extends AppCompatActivity {
                 //  String cover)
                 db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                         check.getText().toString(), "Common", Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
-                startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
+               startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
+
             }
         });
 
