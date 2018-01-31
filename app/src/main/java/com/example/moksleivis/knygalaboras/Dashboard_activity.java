@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.List;
@@ -18,6 +21,11 @@ import java.util.List;
 public class Dashboard_activity extends AppCompatActivity {
 
     Button button;
+    Button istrinti;
+    EditText id;
+    ListView lv;
+    ArrayAdapter<Knyga> adapter;
+    DatabaseHandler db = new DatabaseHandler(this);
     private ArrayAdapter<String> listAdapter ;
     private ListView mainListView ;
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +33,15 @@ public class Dashboard_activity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard_activity);
 
         button = (Button) findViewById(R.id.prideti);
+        istrinti = (Button) findViewById(R.id.istrinti);
         mainListView = (ListView) findViewById( R.id.listView1 );
+        id = (EditText) findViewById(R.id.id);
 
-        DatabaseHandler db = new DatabaseHandler(this);
         List<Knyga> Books = db.getAllBooks();
-        ArrayAdapter<Knyga> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,Books);
-        ListView lv= (ListView) findViewById(R.id.listView1);
+
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,Books);
+
+        lv= (ListView) findViewById(R.id.listView1);
         //sudeda i listviewa irasus
         lv.setAdapter(adapter);
         button.setOnClickListener(new View.OnClickListener() {
@@ -40,8 +51,22 @@ public class Dashboard_activity extends AppCompatActivity {
                 startActivity(new Intent(Dashboard_activity.this, Add_activity.class));
             }
         });
+        istrinti.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+            db.deleteBooks(id.getText().toString());
 
 
+
+              lv.invalidate();
+                lv.setAdapter(adapter);
+                lv.invalidate();
+                lv.deferNotifyDataSetChanged();
+
+            }
+        });
 
 
 

@@ -33,7 +33,7 @@ public class Add_activity extends AppCompatActivity {
     CheckBox check2;
     CheckBox check3;
     CheckBox check4;
-    String checkString;
+    String checkString = "";
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button button;
@@ -68,29 +68,28 @@ public class Add_activity extends AppCompatActivity {
             }
         });
 
-
-
-
-
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                if (check1.isSelected()){
-                    checkString += " " + check1.getText().toString();
-                }else if(check2.isSelected()){
-                    checkString += " " + check2.getText().toString();
-                }else if (check3.isSelected()){
-                    checkString += " " + check3.getText().toString();
-                }else if (check4.isSelected()){
-                    checkString += " " + check4.getText().toString();
-                }
+
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 radioButton = (RadioButton) findViewById(selectedId);
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 // String name, String user, String release_year, String author, String genre, String rarity, int pages,
                 //  String cover)
+                if (check1.isChecked()){
+                    checkString = checkString + check1.getText().toString();
+                }if(check2.isChecked()){
+                    checkString  = checkString + check2.getText().toString();
+                }if (check3.isChecked()){
+                    checkString  = checkString +  check3.getText().toString();
+                }if (check4.isChecked()){
+                    checkString  = checkString +  check4.getText().toString();
+                }
+
+
                 db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                        checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
                startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
