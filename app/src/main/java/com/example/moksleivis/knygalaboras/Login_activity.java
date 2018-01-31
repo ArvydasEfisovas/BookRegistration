@@ -1,6 +1,8 @@
 package com.example.moksleivis.knygalaboras;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,11 @@ public class Login_activity extends AppCompatActivity {
     private Button Register;
     EditText mEdit;
     EditText mEdit2;
+    CheckBox rememberMe;
+    private SharedPreferences loginPreferences;
+    private SharedPreferences.Editor loginPrefsEditor;
+    private Boolean saveLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,18 +33,24 @@ public class Login_activity extends AppCompatActivity {
 
 
 // cia tuscia eilute
-
-
-
-
-
-
         //cia tuscia eilute
 
         mEdit   = (EditText)findViewById(R.id.login_pokemon_name);
         mEdit2   = (EditText)findViewById(R.id.editText);
         button = (Button) findViewById(R.id.buttonToast);
         Button Register = (Button)findViewById(R.id.button2);
+         rememberMe = (CheckBox)findViewById(R.id.RemeberMe);
+
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
+
+        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        if (saveLogin == true) {
+            mEdit.setText(loginPreferences.getString("username", ""));
+            mEdit2.setText(loginPreferences.getString("password", ""));
+            rememberMe.setChecked(true);
+        }
+
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +67,16 @@ public class Login_activity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
              DatabaseHandler db =  new DatabaseHandler(getApplicationContext());
+
+                if (rememberMe.isChecked()) {
+                    loginPrefsEditor.putBoolean("saveLogin", true);
+                    loginPrefsEditor.putString("username", mEdit.getText().toString());
+                    loginPrefsEditor.putString("password", mEdit2.getText().toString());
+                    loginPrefsEditor.commit();
+                }else {
+                    loginPrefsEditor.clear();
+                    loginPrefsEditor.commit();
+                }
 
                 Contact contactForLogin = db.getContactForLogin(mEdit.getText().toString(),mEdit2.getText().toString());
                 if(!Validation.isValidCredentials(mEdit.getText().toString())){

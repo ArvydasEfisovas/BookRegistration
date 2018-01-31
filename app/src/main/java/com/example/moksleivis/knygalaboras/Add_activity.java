@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,12 +24,16 @@ import java.util.List;
 public class Add_activity extends AppCompatActivity {
 
 
-
+    String Text;
     EditText name;
     EditText releaseyear;
     EditText Author;
     EditText Pages;
-    CheckBox check;
+    CheckBox check1;
+    CheckBox check2;
+    CheckBox check3;
+    CheckBox check4;
+    String checkString;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button button;
@@ -47,8 +52,21 @@ public class Add_activity extends AppCompatActivity {
         button = (Button) findViewById(R.id.prideti1);
         radioGroup = (RadioGroup) findViewById(R.id.radio);
 
-        check = (CheckBox)findViewById(R.id.check1);
+        check1 = (CheckBox)findViewById(R.id.check1);
+        check2 = (CheckBox)findViewById(R.id.check2);
+        check3 = (CheckBox)findViewById(R.id.check3);
+        check4 = (CheckBox)findViewById(R.id.check4);
         spin = (Spinner)findViewById(R.id.spinner1) ;
+
+
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+               // Object item = parent.getItemAtPosition(pos);
+                 Text = String.valueOf(spin.getSelectedItem());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
 
 
@@ -58,6 +76,15 @@ public class Add_activity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
+                if (check1.isSelected()){
+                    checkString += " " + check1.getText().toString();
+                }else if(check2.isSelected()){
+                    checkString += " " + check2.getText().toString();
+                }else if (check3.isSelected()){
+                    checkString += " " + check3.getText().toString();
+                }else if (check4.isSelected()){
+                    checkString += " " + check4.getText().toString();
+                }
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 radioButton = (RadioButton) findViewById(selectedId);
@@ -65,7 +92,7 @@ public class Add_activity extends AppCompatActivity {
                 // String name, String user, String release_year, String author, String genre, String rarity, int pages,
                 //  String cover)
                 db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
-                        check.getText().toString(), "Common", Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
+                       checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
                startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
 
             }
