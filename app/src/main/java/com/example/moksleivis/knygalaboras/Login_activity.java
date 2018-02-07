@@ -41,10 +41,10 @@ public class Login_activity extends AppCompatActivity {
         Button Register = (Button)findViewById(R.id.button2);
          rememberMe = (CheckBox)findViewById(R.id.RemeberMe);
 
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPreferences = getSharedPreferences("com.example.moksleivis.knygalaboras", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
 
-        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        saveLogin = loginPreferences.getBoolean("rememberMe", false);
         if (saveLogin == true) {
             mEdit.setText(loginPreferences.getString("username", ""));
             mEdit2.setText(loginPreferences.getString("password", ""));

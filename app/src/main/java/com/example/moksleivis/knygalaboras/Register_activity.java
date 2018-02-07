@@ -77,31 +77,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 
         }
-    public void addUser()
-    {
-        String sql = "INSERT INTO `users`"
-                + "(`username`, `password`,'userlevel',  `email`)"
-                + " VALUES (?, ?, ?, ?)";
-        try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://192.168.0.105/db", "root", "");
-            PreparedStatement add = myConn.prepareStatement(sql);
-            add.setString(1,mEdit.getText().toString());
-            add.setString(2,mEdit2.getText().toString());
-            add.setInt(3,1);
-            add.setString(4,mEdit4.getText().toString());
 
-
-            Toast.makeText(getApplicationContext(),
-                    "suveike duombaze", Toast.LENGTH_LONG).show();
-
-            add.execute();
-            add.close();
-        }catch(Exception exc){
-            exc.printStackTrace();
-            Toast.makeText(getApplicationContext(),
-                    "nesuveike duombaze", Toast.LENGTH_LONG).show();
-        }
-    }
 
 
     }

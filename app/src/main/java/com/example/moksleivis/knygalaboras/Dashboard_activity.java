@@ -57,13 +57,14 @@ public class Dashboard_activity extends AppCompatActivity {
             public void onClick(View arg0) {
 
             db.deleteBooks(id.getText().toString());
+                finish();
+
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
 
 
 
-              lv.invalidate();
-                lv.setAdapter(adapter);
-                lv.invalidate();
-                lv.deferNotifyDataSetChanged();
 
             }
         });
