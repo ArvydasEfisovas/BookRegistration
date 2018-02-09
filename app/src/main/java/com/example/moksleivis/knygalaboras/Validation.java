@@ -10,12 +10,13 @@ import java.util.regex.Pattern;
 public class Validation {
 
     private static final String VALID_ID_REGEX ="^[0-9]{1,7}$";
-    private static final String VALID_POKEMONNAME_ADD_REGEX ="^[A-Za-z ]{1,1000}$";
-    private static final String VALID_POKEMONNAME_SEARCH_REGEX ="^[A-Za-z]{1,1000}$";
-    private static final String VALID_stats_REGEX ="^[0-9.]{1,7}$";
-    private static final String VALID_CREDENTIALS_REGEX ="^[A-Za-z0-9.-]{5,13}$";
+    private static final String VALID_CLIENTNAME_ADD_REGEX ="^[A-Za-z0-9_ ąčęėįšųĄČĘĖĮŠŲŪ]{1,100}$";
+    private static final String VALID_CLIENTNAME_SEARCH_REGEX ="^[A-Za-z0-9_ ąčęėįšųĄČĘĖĮŠŲŪ]{1,100}$";
+    private static final String VALID_CREDENTIALS_REGEX ="^[A-Za-z0-9.-_ąčęėįšųĄČĘĖĮŠŲŪ ]{5,30}$";
     private static final String VALID_EMAIL_ADDRESS_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$";
-
+    private static final String VALID_YEAR = "^[0-9/]{1,11}$";
+    private static final String VALID_PAGES = "^[0-9]{1,4}$";
+    private static final String VALID_AUTHORNAME = "^[A-Za-z ąčęėįšųĄČĘĖĮŠŲŪ]{1,1000}$";
 
     public static boolean isValidCredentials(String credentials){
         Pattern credentialsPattern = Pattern.compile(VALID_CREDENTIALS_REGEX);
@@ -34,21 +35,30 @@ public class Validation {
         return IDMatcher.find();
     }
 
-
-    public static boolean isValidPokemonNameForAdd(String Pokemon){
-        Pattern PokemonNamePattern = Pattern.compile(VALID_POKEMONNAME_ADD_REGEX);
+    public static boolean isValidYear(String year){
+        Pattern yearPattern = Pattern.compile(VALID_YEAR);
+        Matcher yearMatcher = yearPattern.matcher(year);
+        return yearMatcher.find();
+    }
+    public static boolean isValidClientNameForAdd(String Pokemon){
+        Pattern PokemonNamePattern = Pattern.compile(VALID_CLIENTNAME_ADD_REGEX);
         Matcher PokemonNameMatcher = PokemonNamePattern.matcher(Pokemon);
         return PokemonNameMatcher.find();
     }
-
-    public static boolean isValidstats(String stats){
-        Pattern statsPattern = Pattern.compile(VALID_stats_REGEX);
-        Matcher statsMatcher = statsPattern.matcher(stats);
-        return statsMatcher.find();
+    public static boolean isValidAuthor(String author) {
+        Pattern authorNamePattern = Pattern.compile(VALID_AUTHORNAME);
+        Matcher authorNameMatcher = authorNamePattern.matcher(author);
+        return authorNameMatcher.find();
+    }
+    public static boolean isValidPages(String pages) {
+        Pattern pagesPattern = Pattern.compile(VALID_PAGES);
+        Matcher pagesMatcher = pagesPattern.matcher(pages);
+        return pagesMatcher.find();
     }
 
-    public static boolean isValidPokemonNameForSearch(String Pokemon){
-        Pattern PokemonNamePattern = Pattern.compile(VALID_POKEMONNAME_SEARCH_REGEX);
+
+    public static boolean isValidClientNameForSearch(String Pokemon){
+        Pattern PokemonNamePattern = Pattern.compile(VALID_CLIENTNAME_SEARCH_REGEX);
         Matcher PokemonNameMatcher = PokemonNamePattern.matcher(Pokemon);
         return PokemonNameMatcher.find();
     }

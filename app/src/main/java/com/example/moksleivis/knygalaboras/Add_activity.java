@@ -79,7 +79,48 @@ public class Add_activity extends AppCompatActivity {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 // String name, String user, String release_year, String author, String genre, String rarity, int pages,
                 //  String cover)
-                if (check1.isChecked()){
+                if(knyga_validate("add")){
+                    radioButton = (RadioButton) findViewById(selectedId);
+                    db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
+                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
+                    startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
+                }
+
+
+
+
+            }
+        });
+    }
+    private boolean knyga_validate(String action) {
+        checkString = "";
+        switch(action) {
+
+            case "add":
+                if(!Validation.isValidClientNameForAdd(name.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Netinkamas vardas", Toast.LENGTH_LONG).show();
+                    return false;
+                }else if(!Validation.isValidAuthor(Author.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Netinkamas Autorio vardas", Toast.LENGTH_LONG).show();
+
+                     return false;
+                }else if(!Validation.isValidPages(Pages.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Netinkamas puslapiu kiekis", Toast.LENGTH_LONG).show();
+                    return false;
+                }else if(!Validation.isValidYear(releaseyear.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Netinkamas metu formatas", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                else if(!(check1.isChecked()||check2.isChecked()||check3.isChecked()||check4.isChecked()))
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Nepasirinktas žanras", Toast.LENGTH_LONG).show();
+                     return false;
+                }else { if (check1.isChecked()){
                     checkString = checkString + check1.getText().toString();
                 }if(check2.isChecked()){
                     checkString  = checkString + check2.getText().toString();
@@ -88,23 +129,13 @@ public class Add_activity extends AppCompatActivity {
                 }if (check4.isChecked()){
                     checkString  = checkString +  check4.getText().toString();
                 }
+                    return true;
+                }
 
 
-                db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
-                       checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
-               startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
-
-            }
-        });
-
-
-
-
-
-
-
+        }
+        return true;
     }
-
 
 
 }

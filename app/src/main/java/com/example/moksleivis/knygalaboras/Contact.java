@@ -8,7 +8,7 @@ public class Contact {
     //private variables
     int _id;
     String _name;
-    String _phone_number;
+    String _password;
     String _email;
 
     // Empty constructor
@@ -19,14 +19,14 @@ public class Contact {
     public Contact(int id, String name, String _phone_number,String _email){
         this._id = id;
         this._name = name;
-        this._phone_number = _phone_number;
+        this._password = _phone_number;
         this._email = _email;
     }
 
     // constructor
     public Contact(String name, String _phone_number,String _email){
         this._name = name;
-        this._phone_number = _phone_number;
+        this._password = _phone_number;
         this._email = _email;
     }
 
@@ -55,12 +55,12 @@ public class Contact {
 
     // getting phone number
     public String getPhoneNumber(){
-        return this._phone_number;
+        return this._password;
     }
 
     // setting phone number
     public void setPhoneNumber(String phone_number){
-        this._phone_number = phone_number;
+        this._password = phone_number;
     }
     public String getEmail(){
         return this ._email;
@@ -71,6 +71,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return this._id +this._name + this._phone_number ;
+        return this._id +this._name + this._password;
     }
 }
