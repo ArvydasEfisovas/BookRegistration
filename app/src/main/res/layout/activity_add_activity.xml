@@ -18,20 +18,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:hint="Enter your book name"/>
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Release year" />
+        android:text="Release year"
+        />
 
     <EditText
         android:id="@+id/release_year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:hint="dd/mm/year"/>
 
     <TextView
         android:id="@+id/textView6"
@@ -44,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:hint="Enter author's name"/>
 
     <TextView
         android:id="@+id/textView7"
@@ -57,7 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:hint="Enter page amount"/>
     <TextView
         android:id="@+id/cover"
         android:layout_width="match_parent"
