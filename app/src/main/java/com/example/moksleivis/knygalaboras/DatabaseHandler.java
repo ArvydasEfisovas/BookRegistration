@@ -240,7 +240,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(check4,knyga.getCheck4());
         // updating row
          db.update(TABLE_BOOKS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(knyga.getId())});
+                new String[] { String.valueOf(knyga.getId()+1)});
          db.close();
     }
 
