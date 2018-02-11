@@ -1,6 +1,7 @@
 package com.example.moksleivis.knygalaboras;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import junit.framework.Test;
 
 import java.util.List;
 
@@ -38,6 +41,10 @@ public class Add_activity extends AppCompatActivity {
     private RadioButton radioButton;
     private Button button;
     private Spinner spin;
+    int check1B = 0;
+    int check2B = 0;
+    int check3B = 0;
+    int check4B = 0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_activity);
@@ -57,7 +64,7 @@ public class Add_activity extends AppCompatActivity {
         check3 = (CheckBox)findViewById(R.id.check3);
         check4 = (CheckBox)findViewById(R.id.check4);
         spin = (Spinner)findViewById(R.id.spinner1) ;
-
+        spin.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -82,8 +89,12 @@ public class Add_activity extends AppCompatActivity {
                 if(knyga_validate("add")){
                     radioButton = (RadioButton) findViewById(selectedId);
                     db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
-                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString()));
-                    startActivity(new Intent(Add_activity.this, Dashboard_activity.class));
+                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
+
+
+                    Intent intent2 = new Intent(Add_activity.this, Dashboard_activity.class);
+                    startActivity(intent2);
+
                 }
 
 
@@ -122,13 +133,18 @@ public class Add_activity extends AppCompatActivity {
                      return false;
                 }else { if (check1.isChecked()){
                     checkString = checkString + check1.getText().toString();
+                   check1B = 1;
                 }if(check2.isChecked()){
                     checkString  = checkString + check2.getText().toString();
+                    check2B = 1;
                 }if (check3.isChecked()){
                     checkString  = checkString +  check3.getText().toString();
+                    check3B = 1;
                 }if (check4.isChecked()){
                     checkString  = checkString +  check4.getText().toString();
+                    check4B = 1;
                 }
+
                     return true;
                 }
 

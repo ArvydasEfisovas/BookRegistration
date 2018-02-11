@@ -16,7 +16,7 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "contactsManager";
@@ -38,6 +38,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String rarity= "rarity";//choice box
     private static final String pages = "pages";
     private  static final String cover = "cover"; // radio button hard/soft cover
+    private  static final String check1 = "check1";
+    private  static final String check2 = "check2";
+    private  static final String check3 = "check3";
+    private  static final String check4 = "check4";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -56,7 +60,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_BOOKS_TABLE = "CREATE TABLE " + TABLE_BOOKS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + name + " TEXT,"
                 + release_year + " TEXT," + author  + " TEXT," +  genre +
-                " TEXT," + rarity + " TEXT," + pages + " TEXT," + cover + ")";
+                " TEXT," + rarity + " TEXT," + pages + " TEXT," + cover + " TEXT,"  +
+                check1 + " INTEGER," + check2 + " INTEGER," + check3 + " INTEGER," + check4 +    ")";
         db.execSQL(CREATE_BOOKS_TABLE);
     }
 
@@ -98,6 +103,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(rarity,knyga.getRarity());
         values.put(pages,knyga.getPages());
         values.put(cover,knyga.getCover());
+        values.put(check1,knyga.getCheck1());
+        values.put(check2,knyga.getCheck2());
+        values.put(check3,knyga.getCheck3());
+        values.put(check4,knyga.getCheck4());
         // Inserting Row
         db.insert(TABLE_BOOKS, null, values);
         db.close(); // Closing database connection
@@ -185,6 +194,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 knyga.setRarity(cursor.getString(5));
                 knyga.setPages(Integer.parseInt((cursor.getString(6))));
                 knyga.setCover(cursor.getString(7));
+               knyga.setCheck1(Integer.parseInt((cursor.getString(8))));
+               knyga.setCheck2(Integer.parseInt((cursor.getString(9))));
+             knyga.setCheck3(Integer.parseInt((cursor.getString(10))));
+              knyga.setCheck4(Integer.parseInt((cursor.getString(11))));
                 // Adding contact to list
                 bookList.add(knyga);
             } while (cursor.moveToNext());
@@ -207,6 +220,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(contact.getID()) });
+    }
+
+    // Updating single contact
+    public void updateBook(Knyga knyga) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(name, knyga.getName()); // Contact Name
+        values.put(release_year, knyga.getRelease_year()); // Contact Phone
+        values.put(author,knyga.getAuthor());
+        values.put(genre,knyga.getGenre());
+        values.put(rarity,knyga.getRarity());
+        values.put(pages,knyga.getPages());
+        values.put(cover,knyga.getCover());
+        values.put(check1,knyga.getCheck1());
+        values.put(check2,knyga.getCheck2());
+        values.put(check3,knyga.getCheck3());
+        values.put(check4,knyga.getCheck4());
+        // updating row
+         db.update(TABLE_BOOKS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(knyga.getId())});
+         db.close();
     }
 
     // Deleting single contact
