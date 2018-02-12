@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="dd/mm/year"/>
+        android:hint="year/mm/dd"/>
 
     <TextView
         android:id="@+id/textView6"
@@ -134,6 +134,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="prideti" />
+        <Button
+            android:id="@+id/update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="update" />
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="delete" />
 
 
 

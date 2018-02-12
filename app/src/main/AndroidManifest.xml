@@ -40,14 +40,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".singleitem_activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-
-            </intent-filter>
-        </activity>
-
 
     </application>
 

@@ -162,8 +162,8 @@ public class Knyga {
     }
     @Override
     public String toString() {
-        return "Knyga [id=" + id + ", name=" + name + ", release_year=" + release_year + ", author=" + author
-                + ", genre=" + genre + ", rarity=" + rarity + ", pages=" + pages + ", cover=" + cover + "]";
+        return " name = " + name + "\n" +" release_year=" + release_year +  "\n" + " author = " + author
+                + "\n" + " genre = " + genre +  "\n" + "rarity = " + rarity +  "\n" +"pages = " + pages + "\n" +  "cover = " + cover ;
     }
 
 }
