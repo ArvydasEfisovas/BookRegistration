@@ -14,10 +14,10 @@ public class Knyga {
     private String name;
     private String release_year;
     private String author;
-    private String genre; //check box
-    private String rarity;//choice box
+    private String genre;
+    private String rarity;
     private int pages;
-    private String cover; // radio button hard/soft cover
+    private String cover;
     private int check1;
     private int check2;
     private int check3;
@@ -162,9 +162,7 @@ public class Knyga {
     }
     @Override
     public String toString() {
-        return " name = " + name + "\n" +" release_year=" + release_year +  "\n" + " author = " + author
-                + "\n" + " genre = " + genre +  "\n" + "rarity = " + rarity +  "\n" +"pages = " + pages + "\n" +  "cover = " + cover ;
-    }
+        return " Book's Name = " + name; }
 
 }
 

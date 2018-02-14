@@ -78,7 +78,6 @@ public class Add_activity extends AppCompatActivity {
         spin = (Spinner)findViewById(R.id.spinner1) ;
         spin.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         add = getIntent().getIntExtra("add_item_id",-1);
-        //update = getIntent().getIntExtra("item_id",-1);
         update = getIntent().getIntExtra("item_id_position",-1);
         delete = getIntent().getIntExtra("item_id",-1);
         Books = db.getAllBooks();
@@ -95,9 +94,6 @@ public class Add_activity extends AppCompatActivity {
         });
 
         if(update >-1){
-            Toast.makeText(getApplicationContext(),
-                    String.valueOf(update), Toast.LENGTH_LONG).show();
-
             addButton.setEnabled(false);
             name.setText(Books.get(update).getName().toString());
             releaseyear.setText(Books.get(update).getRelease_year().toString());
@@ -147,16 +143,9 @@ public class Add_activity extends AppCompatActivity {
                     db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                             checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
 
-
                     Intent intent2 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent2);
-
                 }
-
-
-
-
-
             }
         });
 
@@ -180,12 +169,7 @@ public class Add_activity extends AppCompatActivity {
 
                     Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent3);
-
                 }
-
-
-
-
             }
         });
 

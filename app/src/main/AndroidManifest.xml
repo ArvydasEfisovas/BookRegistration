@@ -11,6 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".Dashboard_activity"/>
+
+        <activity android:name=".Dashboard_activity" android:launchMode="singleTop">
+                   <intent-filter>
+                       <action android:name="android.intent.action.SEARCH"/>
+                       <action android:name="android.intent.action.VIEW"/>
+                   </intent-filter>
+                       <meta-data
+                            android:name="android.app.searchable"
+                           android:resource="@xml/searchable" />
+        </activity>
         <activity android:name=".Login_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,25 +32,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register_activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-               
-            </intent-filter>
         </activity>
-        <activity android:name=".Dashboard_activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-
-            </intent-filter>
-        </activity>
         <activity android:name=".Add_activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-
-            </intent-filter>
         </activity>
 
 
