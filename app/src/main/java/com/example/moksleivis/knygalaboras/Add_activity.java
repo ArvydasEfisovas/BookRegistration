@@ -86,7 +86,6 @@ public class Add_activity extends AppCompatActivity {
 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-               // Object item = parent.getItemAtPosition(pos);
                  Text = String.valueOf(spin.getSelectedItem());
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -213,16 +212,16 @@ public class Add_activity extends AppCompatActivity {
                             "Nepasirinktas žanras", Toast.LENGTH_LONG).show();
                      return false;
                 }else { if (check1.isChecked()){
-                    checkString = checkString + " " + check1.getText().toString();
+                    checkString = checkString  +  " " + check1.getText().toString();
                    check1B = 1;
                 }if(check2.isChecked()){
-                    checkString  = checkString + " " + check2.getText().toString();
+                    checkString  = checkString + ", " + check2.getText().toString();
                     check2B = 1;
                 }if (check3.isChecked()){
-                    checkString  = checkString + " " +  check3.getText().toString();
+                    checkString  = checkString + ", " +  check3.getText().toString();
                     check3B = 1;
                 }if (check4.isChecked()){
-                    checkString  = checkString + " " +  check4.getText().toString();
+                    checkString  = checkString + ", "+  check4.getText().toString();
                     check4B = 1;
                 }
 
@@ -257,13 +256,13 @@ public class Add_activity extends AppCompatActivity {
                     checkString = checkString + " " + check1.getText().toString();
                     check1B = 1;
                 }if(check2.isChecked()){
-                    checkString  = checkString + " " + check2.getText().toString();
+                    checkString  = checkString + ", " + check2.getText().toString();
                     check2B = 1;
                 }if (check3.isChecked()){
-                    checkString  = checkString + " " + check3.getText().toString();
+                    checkString  = checkString + ", " + check3.getText().toString();
                     check3B = 1;
                 }if (check4.isChecked()){
-                    checkString  = checkString + " " +  check4.getText().toString();
+                    checkString  = checkString + ", " +  check4.getText().toString();
                     check4B = 1;
                 }
 

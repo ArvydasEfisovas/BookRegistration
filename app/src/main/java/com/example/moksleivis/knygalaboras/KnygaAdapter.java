@@ -45,6 +45,7 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder1.genre.setText("Genre : "+ knyga.getGenre());
         holder1.release_year.setText("Release Date : "+ knyga.getRelease_year());
         holder1.author.setText("Author : " + knyga.getAuthor());
+        holder1.pages.setText("Pages : " + knyga.getPages());
 
     }
 
@@ -60,7 +61,7 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView name, release_year, author,genre;
+        public TextView name, release_year, author,genre,pages;
                public MyHolder(View itemView){
                        super(itemView);
 
@@ -68,6 +69,7 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                    release_year = (TextView) itemView.findViewById(R.id.year);
                    author = (TextView) itemView.findViewById(R.id.author);
                    genre = (TextView) itemView.findViewById(R.id.genre);
+                   pages = (TextView) itemView.findViewById(R.id.pages);
                       itemView.setOnClickListener(this);
                    }
 

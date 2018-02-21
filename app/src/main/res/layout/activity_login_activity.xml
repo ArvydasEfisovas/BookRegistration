@@ -38,7 +38,7 @@
         android:inputType="textPassword" />
 
     <CheckBox
-        android:id="@+id/RemeberMe"
+        android:id="@+id/RememberMe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Remember Me" />

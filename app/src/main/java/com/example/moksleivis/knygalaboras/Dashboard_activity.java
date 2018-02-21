@@ -36,13 +36,9 @@ import java.util.List;
 public class Dashboard_activity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     Button button;
-    Button istrinti;
-    EditText id;
-    ListView lv;
-    ArrayAdapter<Knyga> adapter;
+
     DatabaseHandler db = new DatabaseHandler(this);
-    private ArrayAdapter<String> listAdapter ;
-    private ListView mainListView ;
+
     List<Knyga> Books;
     private RecyclerView recyclerView;
     private KnygaAdapter mAdapter;
@@ -120,6 +116,7 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
       mAdapter.setFilter(newList);
         return true;
     }
+
 
    /* @Override
    //every time when you press search button an actvity is recreated which in turn

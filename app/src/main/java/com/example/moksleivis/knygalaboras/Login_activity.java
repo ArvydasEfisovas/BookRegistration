@@ -39,12 +39,12 @@ public class Login_activity extends AppCompatActivity {
         mEdit2   = (EditText)findViewById(R.id.editText);
         button = (Button) findViewById(R.id.buttonToast);
         Button Register = (Button)findViewById(R.id.button2);
-         rememberMe = (CheckBox)findViewById(R.id.RemeberMe);
+         rememberMe = (CheckBox)findViewById(R.id.RememberMe);
 
         loginPreferences = getSharedPreferences("com.example.moksleivis.knygalaboras", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
 
-        saveLogin = loginPreferences.getBoolean("rememberMe", false);
+        saveLogin = loginPreferences.getBoolean("saveLogin", false);
         if (saveLogin == true) {
             mEdit.setText(loginPreferences.getString("username", ""));
             mEdit2.setText(loginPreferences.getString("password", ""));
@@ -67,7 +67,6 @@ public class Login_activity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
              DatabaseHandler db =  new DatabaseHandler(getApplicationContext());
-
                 if (rememberMe.isChecked()) {
                     loginPrefsEditor.putBoolean("saveLogin", true);
                     loginPrefsEditor.putString("username", mEdit.getText().toString());
@@ -77,6 +76,8 @@ public class Login_activity extends AppCompatActivity {
                     loginPrefsEditor.clear();
                     loginPrefsEditor.commit();
                 }
+
+
 
                 Contact contactForLogin = db.getContactForLogin(mEdit.getText().toString(),mEdit2.getText().toString());
                 if(!Validation.isValidCredentials(mEdit.getText().toString())){
@@ -92,7 +93,7 @@ public class Login_activity extends AppCompatActivity {
                 }
                else if(contactForLogin.getName() !=null) {
 
-                   startActivity(new Intent(Login_activity.this, Dashboard_activity.class));
+                    startActivity(new Intent(Login_activity.this, Dashboard_activity.class));
                 }else{
                    Toast.makeText(getApplicationContext(),
                           "Toks vartotojas neegzistuoja", Toast.LENGTH_LONG).show();

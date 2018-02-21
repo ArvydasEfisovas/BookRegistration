@@ -9,6 +9,7 @@ android:layout_height="match_parent"
 
 tools:showIn="@layout/activity_dashboard_activity"
 tools:context=".Dashboard_activity">
+
     <Button
         android:id="@+id/prideti"
         android:layout_width="match_parent"
@@ -23,5 +24,6 @@ tools:context=".Dashboard_activity">
     android:paddingTop="10dp"
     android:layout_weight="1"
     />
+
 
 </RelativeLayout>
