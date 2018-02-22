@@ -24,7 +24,7 @@
         android:textColor="@color/text"/>
 
     <EditText
-        android:id="@+id/register_pokemon_name"
+        android:id="@+id/register_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -35,7 +35,7 @@
         android:textColor="@color/text"/>
 
     <EditText
-        android:id="@+id/register_pokemon_password"
+        android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -48,7 +48,7 @@
         android:textColor="@color/text"/>
 
     <EditText
-        android:id="@+id/register_pokemon_repeat_password"
+        android:id="@+id/register_repeat_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -62,7 +62,7 @@
         android:textColor="@color/text"/>
 
     <EditText
-        android:id="@+id/register_pokemon_email"
+        android:id="@+id/register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
