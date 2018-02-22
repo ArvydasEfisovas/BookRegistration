@@ -76,7 +76,6 @@ public class Add_activity extends AppCompatActivity {
         check3 = (CheckBox)findViewById(R.id.check3);
         check4 = (CheckBox)findViewById(R.id.check4);
         spin = (Spinner)findViewById(R.id.spinner1) ;
-        spin.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         add = getIntent().getIntExtra("add_item_id",-1);
         update = getIntent().getIntExtra("item_id_position",-1);
         delete = getIntent().getIntExtra("item_id",-1);
@@ -134,9 +133,6 @@ public class Add_activity extends AppCompatActivity {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 radioButton = (RadioButton) findViewById(selectedId);
-
-                // String name, String user, String release_year, String author, String genre, String rarity, int pages,
-                //  String cover)
                 if(knyga_validate("add")){
                     radioButton = (RadioButton) findViewById(selectedId);
                     db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
@@ -156,16 +152,10 @@ public class Add_activity extends AppCompatActivity {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 radioButton = (RadioButton) findViewById(selectedId);
-
-                // String name, String user, String release_year, String author, String genre, String rarity, int pages,
-                //  String cover)
-
                 if(knyga_validate("update")){
                     radioButton = (RadioButton) findViewById(selectedId);
                          db.updateBook(new Knyga(update, name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                             checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
-
-
                     Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent3);
                 }

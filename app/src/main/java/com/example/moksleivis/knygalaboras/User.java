@@ -4,7 +4,7 @@ package com.example.moksleivis.knygalaboras;
  * Created by arvyd on 1/20/2018.
  */
 
-public class Contact {
+public class User {
     //private variables
     int _id;
     String _name;
@@ -12,11 +12,11 @@ public class Contact {
     String _email;
 
     // Empty constructor
-    public Contact(){
+    public User(){
 
     }
     // constructor
-    public Contact(int id, String name, String _phone_number,String _email){
+    public User(int id, String name, String _phone_number, String _email){
         this._id = id;
         this._name = name;
         this._password = _phone_number;
@@ -24,7 +24,7 @@ public class Contact {
     }
 
     // constructor
-    public Contact(String name, String _phone_number,String _email){
+    public User(String name, String _phone_number, String _email){
         this._name = name;
         this._password = _phone_number;
         this._email = _email;

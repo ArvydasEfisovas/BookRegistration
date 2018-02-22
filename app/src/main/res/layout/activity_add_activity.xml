@@ -6,12 +6,14 @@
     android:orientation="vertical">
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/bookbackground">
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name" />
+        android:text="Name"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/name"
@@ -19,13 +21,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Enter your book name"/>
+        android:hint="Enter your book name"
+        android:textColor="@color/text"/>
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Release year"
+        android:textColor="@color/text"
         />
 
     <EditText
@@ -40,7 +44,8 @@
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Author" />
+        android:text="Author"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/author"
@@ -54,7 +59,8 @@
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pages" />
+        android:text="Pages"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/pages"
@@ -67,7 +73,8 @@
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cover" />
+        android:text="Cover"
+        android:textColor="@color/text"/>
     <RadioGroup
         android:id="@+id/radio"
         android:layout_width="match_parent"
@@ -92,7 +99,8 @@
         android:id="@+id/Genre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Genre" />
+        android:text="Genre"
+        android:textColor="@color/text"/>
     <CheckBox
         android:id="@+id/check1"
         android:layout_width="match_parent"
@@ -121,29 +129,37 @@
         android:id="@+id/rarity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rarity" />
+        android:text="Rarity"
+        android:textColor="@color/text"/>
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/rarity_array"
+
         />
 
     <Button
         android:id="@+id/prideti1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="prideti" />
+        android:text="ADD"
+        android:background="@drawable/my_button_bg"
+        android:textColor="@color/text"/>
         <Button
             android:id="@+id/update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="update" />
+            android:text="update"
+            android:background="@drawable/my_button_bg"
+            android:textColor="@color/text"/>
         <Button
             android:id="@+id/delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="delete" />
+            android:text="delete"
+            android:background="@drawable/my_button_bg"
+            android:textColor="@color/text"/>
 
 
 

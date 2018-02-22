@@ -16,13 +16,13 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
-    private static final String DATABASE_NAME = "contactsManager";
+    private static final String DATABASE_NAME = "db";
 
     // Contacts table name
-    private static final String TABLE_CONTACTS = "contacts";
+    private static final String TABLE_USERS = "users";
     private static final String TABLE_BOOKS = "books";
 
     // Contacts Table Columns names
@@ -50,7 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                + KEY_password + " TEXT," + KEY_email  +")";
        db.execSQL(CREATE_CONTACTS_TABLE);
@@ -69,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKS);
         // Create tables again
         onCreate(db);
@@ -79,25 +79,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * All CRUD(Create, Read, Update, Delete) Operations
      */
 
-    // Adding new contact
-    void addContact(Contact contact) {
+    // Adding new user
+    void addUsers(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName()); // Contact Name
-        values.put(KEY_password, contact.getPhoneNumber()); // Contact Phone
-        values.put(KEY_email,contact.getEmail());
-        // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
-        db.close(); // Closing database connection
+        values.put(KEY_NAME, user.getName());
+        values.put(KEY_password, user.getPhoneNumber());
+        values.put(KEY_email, user.getEmail());
+        db.insert(TABLE_USERS, null, values);
+        db.close();
     }
 
     void addBook(Knyga knyga) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(name, knyga.getName()); // Contact Name
-        values.put(release_year, knyga.getRelease_year()); // Contact Phone
+        values.put(name, knyga.getName());
+        values.put(release_year, knyga.getRelease_year());
         values.put(author,knyga.getAuthor());
         values.put(genre,knyga.getGenre());
         values.put(rarity,knyga.getRarity());
@@ -107,69 +106,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(check2,knyga.getCheck2());
         values.put(check3,knyga.getCheck3());
         values.put(check4,knyga.getCheck4());
-        // Inserting Row
         db.insert(TABLE_BOOKS, null, values);
-        db.close(); // Closing database connection
+        db.close();
     }
 
-
-
-    // Getting single contact
-    Contact getContact(int id) {
+    User getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
+        Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID,
                         KEY_NAME, KEY_password,KEY_email}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
+        User user = new User(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2),cursor.getString(3));
-        // return contact
-        return contact;
+        // return user
+        return user;
     }
 
-    Contact getContactForLogin(String name,String password) {
+    User getUserForLogin(String name, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Contact contact = new Contact();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
+        User user = new User();
+        Cursor cursor = db.query(TABLE_USERS, new String[] {
                         KEY_NAME, KEY_password,KEY_email}, KEY_NAME + "=?" + " AND " + KEY_password  + "=?" ,
                 new String[] { String.valueOf(name),String.valueOf(password)}, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()){
 
 
-         contact = new Contact(cursor.getString(0),
+         user = new User(cursor.getString(0),
                 cursor.getString(1), cursor.getString(2));
         }
-        // return contact
-        return contact;
+        return user;
     }
 
-    // Getting All Contacts
-    public List<Contact> getAllContacts() {
-        List<Contact> contactList = new ArrayList<Contact>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+
+    public List<User> getAllUsers() {
+        List<User> userList = new ArrayList<User>();
+        String selectQuery = "SELECT  * FROM " + TABLE_USERS;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Contact contact = new Contact();
-                contact.setID(Integer.parseInt(cursor.getString(0)));
-                contact.setName(cursor.getString(1));
-                contact.setPhoneNumber(cursor.getString(2));
-                contact.setEmail(cursor.getString(3));
-                // Adding contact to list
-                contactList.add(contact);
+                User user = new User();
+                user.setID(Integer.parseInt(cursor.getString(0)));
+                user.setName(cursor.getString(1));
+                user.setPhoneNumber(cursor.getString(2));
+                user.setEmail(cursor.getString(3));
+                userList.add(user);
             } while (cursor.moveToNext());
         }
-
-        // return contact list
-        return contactList;
+        return userList;
     }
 
 
@@ -181,8 +170,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
                 Knyga knyga = new Knyga();
@@ -198,37 +185,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                knyga.setCheck2(Integer.parseInt((cursor.getString(9))));
              knyga.setCheck3(Integer.parseInt((cursor.getString(10))));
               knyga.setCheck4(Integer.parseInt((cursor.getString(11))));
-                // Adding contact to list
                 bookList.add(knyga);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
         return bookList;
     }
 
-
-
-    // Updating single contact
-    public int updateContact(Contact contact) {
+    public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_password, contact.getPhoneNumber());
-        values.put(KEY_email,contact.getEmail());
+        values.put(KEY_NAME, user.getName());
+        values.put(KEY_password, user.getPhoneNumber());
+        values.put(KEY_email, user.getEmail());
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        return db.update(TABLE_USERS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(user.getID()) });
     }
 
-    // Updating single contact
     public void updateBook(Knyga knyga) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(name, knyga.getName()); // Contact Name
-        values.put(release_year, knyga.getRelease_year()); // Contact Phone
+        values.put(name, knyga.getName()); // User Name
+        values.put(release_year, knyga.getRelease_year()); // User Phone
         values.put(author,knyga.getAuthor());
         values.put(genre,knyga.getGenre());
         values.put(rarity,knyga.getRarity());
@@ -238,17 +219,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(check2,knyga.getCheck2());
         values.put(check3,knyga.getCheck3());
         values.put(check4,knyga.getCheck4());
-        // updating row
          db.update(TABLE_BOOKS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(knyga.getId()+1)});
          db.close();
     }
 
-    // Deleting single contact
-    public void deleteContact(Contact contact) {
+    public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        db.delete(TABLE_USERS, KEY_ID + " = ?",
+                new String[] { String.valueOf(user.getID()) });
         db.close();
     }
 
@@ -259,10 +238,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-
-    // Getting contacts Count
-    public int getContactsCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+    public int getUserCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_USERS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();

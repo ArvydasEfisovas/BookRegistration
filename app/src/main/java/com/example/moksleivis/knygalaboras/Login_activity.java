@@ -1,19 +1,13 @@
 package com.example.moksleivis.knygalaboras;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Login_activity extends AppCompatActivity {
@@ -79,19 +73,19 @@ public class Login_activity extends AppCompatActivity {
 
 
 
-                Contact contactForLogin = db.getContactForLogin(mEdit.getText().toString(),mEdit2.getText().toString());
+                User userForLogin = db.getUserForLogin(mEdit.getText().toString(),mEdit2.getText().toString());
                 if(!Validation.isValidCredentials(mEdit.getText().toString())){
                     Toast.makeText(getApplicationContext(),
                             "Netinkamas vardas arba slaptazodis", Toast.LENGTH_LONG).show();
                 }else if(!Validation.isValidCredentials(mEdit2.getText().toString())){
                     Toast.makeText(getApplicationContext(),
                             "Netinkamas vardas arba slaptazodis", Toast.LENGTH_LONG).show();
-                }else if(!mEdit2.getText().toString().equals(contactForLogin.getPhoneNumber())){
+                }else if(!mEdit2.getText().toString().equals(userForLogin.getPhoneNumber())){
                     Toast.makeText(getApplicationContext(),
                             "Netinkamas vardas arba slaptazodis", Toast.LENGTH_LONG).show();
 
                 }
-               else if(contactForLogin.getName() !=null) {
+               else if(userForLogin.getName() !=null) {
 
                     startActivity(new Intent(Login_activity.this, Dashboard_activity.class));
                 }else{

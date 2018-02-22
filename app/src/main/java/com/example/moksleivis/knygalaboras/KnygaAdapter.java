@@ -75,7 +75,6 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                @Override
         public void onClick(View v) {
-                   Toast.makeText(context,"veikia0",Toast.LENGTH_LONG).show();
                    int itemPosition = getAdapterPosition();
                             // TODO: siųsti pasirinkto pokemono objektą vietoj id
                    Intent intent = new Intent(context, Add_activity.class);

@@ -6,19 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.moksleivis.knygalaboras.Login_activity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bookbackground">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Knygu registravimo sistema"
-        android:textSize="30sp" />
+        android:text="User Registration"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimaryDark"/>
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username" />
+        android:text="Username"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/register_pokemon_name"
@@ -28,7 +31,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Password" />
+        android:text="Password"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/register_pokemon_password"
@@ -40,7 +44,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Repeat Password" />
+        android:text="Repeat Password"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/register_pokemon_repeat_password"
@@ -53,7 +58,8 @@
     android:id="@+id/email_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Email" />
+    android:text="Email"
+        android:textColor="@color/text"/>
 
     <EditText
         android:id="@+id/register_pokemon_email"
@@ -70,7 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Register" />
+            android:text="Register"
+            android:textColor="@color/text"
+            android:background="@drawable/my_button_bg"/>
     </LinearLayout>
 
 </LinearLayout>

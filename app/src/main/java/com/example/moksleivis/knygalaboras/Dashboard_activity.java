@@ -77,15 +77,6 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
                         MenuItem searchitem = menu.findItem(R.id.actionSearch);
                         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
                         searchView.setOnQueryTextListener(this);
-
-              /*  SearchManager searchManger = (SearchManager) Dashboard_activity.this.getSystemService(Context.SEARCH_SERVICE);
-                if (searchitem != null) {
-                        searchView = (SearchView) searchitem.getActionView();
-                   }
-                if (searchView != null) {
-                        searchView.setSearchableInfo(searchManger.getSearchableInfo(Dashboard_activity.this.getComponentName()));
-                        searchView.setIconified(false);
-                    }*/
                 return true;
             }
 
@@ -118,66 +109,7 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
     }
 
 
-   /* @Override
-   //every time when you press search button an actvity is recreated which in turn
-           //calls this function
-            protected void onNewIntent(Intent intent) {
-                //get search query and create object of class AsyncFetch
-                        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-                        String query = intent.getStringExtra(SearchManager.QUERY);
-                        if (searchView != null) {
-                                searchView.clearFocus();
-                            }
-                        new AsyncFetch(query).execute();
-                    }
-            }
 
-    class AsyncFetch extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog = new ProgressDialog(Dashboard_activity.this);
-        String searchQuery;
-        List<Knyga> knygos = Collections.emptyList();
-
-                public AsyncFetch(String searchQuery) {
-                        this.searchQuery = searchQuery;
-                    }
-
-                @Override
-        protected void onPreExecute() {
-                        super.onPreExecute();
-                        progressDialog.setMessage("Prašome palaukti");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                    }
-
-                @Override
-        protected String doInBackground(String... params) {
-
-                                DatabaseHandler db = new DatabaseHandler(Dashboard_activity.this);
-
-
-                                        knygos = db.getAllBooks();
-                        if (knygos.isEmpty()) {
-                                return "no rows";
-                           } else {
-                                return "rows";
-                            }
-                    }
-
-                @Override
-        protected void onPostExecute(String result) {
-                        progressDialog.dismiss();
-                        if (result.equals("no rows")) {
-                                Toast.makeText(Dashboard_activity.this, "Pagal paiešką nerasta duomenų", Toast.LENGTH_LONG).show();
-                            } else {
-                                //setup and hand over list pokemonai to recyclerview
-                                        RecyclerView rvPokemonai = (RecyclerView) findViewById(R.id.recycler_view);
-                                KnygaAdapter knygaAdapter = new KnygaAdapter(Dashboard_activity.this, knygos);
-                               rvPokemonai.setAdapter(knygaAdapter);
-                                rvPokemonai.setLayoutManager(new LinearLayoutManager(Dashboard_activity.this));
-                              }
-                }
-    }
-*/
 
 
 

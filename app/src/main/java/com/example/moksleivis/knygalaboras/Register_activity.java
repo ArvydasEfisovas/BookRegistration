@@ -8,13 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-
-import static android.R.attr.button;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-
 /**
  * Created by moksleivis on 2018-01-19.
  */
@@ -59,14 +52,12 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
                         Toast.makeText(getApplicationContext(),
                                 "Netinkamai ivestas email", Toast.LENGTH_LONG).show();
                     }else{
-                        Toast.makeText(getApplicationContext(),
-                              "Sekmingai prisiregistravot" + "\n"+ "Username :" + mEdit.getText().toString() + "\n" + "Password :" + mEdit2.getText().toString()+
-                                "\n" + "Password :" + mEdit4.getText().toString(), Toast.LENGTH_LONG).show();
 
-                        Contact userTocheck = new Contact();
+
+                        User userTocheck = new User();
                         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-                        db.addContact(new Contact(mEdit.getText().toString(),mEdit2.getText().toString(),mEdit4.getText().toString()));
+                        db.addUsers(new User(mEdit.getText().toString(),mEdit2.getText().toString(),mEdit4.getText().toString()));
                         startActivity(new Intent(Register_activity.this, Login_activity.class));
                     }
 
