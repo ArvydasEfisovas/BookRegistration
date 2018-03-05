@@ -1,24 +1,21 @@
 package com.example.moksleivis.knygalaboras;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import junit.framework.Test;
-
+import android.app.AlertDialog;
 import java.util.List;
 
 /**
@@ -26,7 +23,6 @@ import java.util.List;
  */
 
 public class Add_activity extends AppCompatActivity {
-
 
     String Text;
     EditText name;
@@ -40,6 +36,8 @@ public class Add_activity extends AppCompatActivity {
     String checkString = "";
     private RadioGroup radioGroup;
     private RadioButton radioButton;
+    private RadioButton radioButton1;
+    private RadioButton radioButton2;
     private Button addButton;
     private Button updateButton;
     private Button deleteButton;
@@ -48,25 +46,28 @@ public class Add_activity extends AppCompatActivity {
     int check2B = 0;
     int check3B = 0;
     int check4B = 0;
+    int check1B1 = 0;
+    int check2B1 = 0;
+    int check3B1 = 0;
+    int check4B1 = 0;
     int add;
     int update;
     int delete;
     List<Knyga> Books;
     DatabaseHandler db;
-
-
+     int selectedId ;
+    int selectedId1 ;
+    int selectedId2 ;
+    Knyga knygaSubmitted;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_activity);
          db = new DatabaseHandler(getApplicationContext());
-
-
         name   = (EditText)findViewById(R.id.name);
         releaseyear   = (EditText)findViewById(R.id.release_year);
         Author   = (EditText)findViewById(R.id.author);
         Pages   = (EditText)findViewById(R.id.pages);
-
         addButton = (Button) findViewById(R.id.prideti1);
         updateButton = (Button) findViewById(R.id.update);
         deleteButton = (Button) findViewById(R.id.delete);
@@ -81,8 +82,9 @@ public class Add_activity extends AppCompatActivity {
         update = getIntent().getIntExtra("item_id_position",-1);
         delete = getIntent().getIntExtra("item_id",-1);
         Books = db.getAllBooks();
-
-
+        Pages.setText("0");
+        // find the radiobutton by returned id
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -108,28 +110,70 @@ public class Add_activity extends AppCompatActivity {
             }
 
             if(Books.get(update).getCheck1() == 1){
+
                 check1.setChecked(true);
                 check1B = 1;
+            }else{
+                check1.setChecked(false);
+                check1B = 0;
             }
             if(Books.get(update).getCheck2() == 1){
+
                 check2.setChecked(true);
                 check2B = 1;
+            }else{
+                check2.setChecked(false);
+                check2B = 0;
             }
             if(Books.get(update).getCheck3() == 1){
+
                 check3.setChecked(true);
                 check3B = 1;
+            }else{
+                check3.setChecked(false);
+                check3B = 0;
             }
             if(Books.get(update).getCheck4() == 1){
+
                 check4.setChecked(true);
                 check4B = 1;
+            }else{
+                check4.setChecked(false);
+                check4B = 0;
             }
 
         }else if(add== -1){
+           knygaSubmitted = new Knyga();
+            knygaSubmitted.setPages(0);
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
             addButton.setBackgroundResource(R.drawable.enabledbutton);
             updateButton.setBackgroundResource(R.drawable.disabledbutton);
             deleteButton.setBackgroundResource(R.drawable.disabledbutton);
+            if(check1.isChecked()){
+                check1.setChecked(true);
+                check1B1 = 1;
+            }else{
+                check1B1 = 0;
+            }
+            if(check2.isChecked()){
+                check2.setChecked(true);
+                check2B1 = 1;
+            }else{
+                check2B1 = 0;
+            }
+            if(check3.isChecked()){
+                check3.setChecked(true);
+                check3B1 = 1;
+            }else{
+                check3B1 = 0;
+            }
+            if(check4.isChecked()){
+                check4.setChecked(true);
+                check4B1 = 1;
+            }else{
+                check4B1 = 0;
+            }
         }
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -137,16 +181,14 @@ public class Add_activity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
 
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-                // find the radiobutton by returned id
-                radioButton = (RadioButton) findViewById(selectedId);
-                if(knyga_validate("add")){
-                    radioButton = (RadioButton) findViewById(selectedId);
+                if(knyga_validate()){
+                    selectedId2 = radioGroup.getCheckedRadioButtonId();
+                    radioButton2 = (RadioButton) findViewById(selectedId2);
                     db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
-                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
-
+                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton2.getText().toString(),check1B1,check2B1,check3B1,check4B1));
                     Intent intent2 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent2);
+                    finish();
                 }
             }
         });
@@ -155,16 +197,17 @@ public class Add_activity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
                 radioButton = (RadioButton) findViewById(selectedId);
-                if(knyga_validate("update")){
+
+                if(knyga_validate()){
                     radioButton = (RadioButton) findViewById(selectedId);
                          db.updateBook(new Knyga(update, name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                             checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
                     Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent3);
+                    finish();
                 }
             }
         });
@@ -177,97 +220,232 @@ public class Add_activity extends AppCompatActivity {
                 db.deleteBooks(String.valueOf(delete));
                     Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent3);
+                    finish();
                 }
         });
     }
-    private boolean knyga_validate(String action) {
-        checkString = "";
-        switch(action) {
 
-            case "add":
-                if(!Validation.isValidClientNameForAdd(name.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas vardas", Toast.LENGTH_LONG).show();
-                    return false;
-                }else if(!Validation.isValidAuthor(Author.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas Autorio vardas", Toast.LENGTH_LONG).show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if(update > -1) {
+                    if(check1.isChecked()){
+                        check1.setChecked(true);
+                        check1B = 1;
+                    }else{
+                        check1B = 0;
+                    }
+                    if(check2.isChecked()){
+                        check2.setChecked(true);
+                        check2B = 1;
+                    }else{
+                        check2B = 0;
+                    }
+                    if(check3.isChecked()){
+                        check3.setChecked(true);
+                        check3B = 1;
+                    }else{
+                        check3B = 0;
+                    }
+                    if(check4.isChecked()){
+                        check4.setChecked(true);
+                        check4B = 1;
+                    }else{
+                        check4B = 0;
+                    }
+                    selectedId = radioGroup.getCheckedRadioButtonId();
+                    radioButton = (RadioButton) findViewById(selectedId);
+                    if (!Books.get(update).getName().equals(name.getText().toString())) {
+                        createDialog();
+                    } else if (!Books.get(update).getRelease_year().equals(releaseyear.getText().toString())) {
+                        createDialog();
+                    } else if (!Books.get(update).getAuthor().equals(Author.getText().toString())) {
+                        createDialog();
+                    } else if (Books.get(update).getCheck1() != check1B) {
+                        createDialog();
+                    } else if (Books.get(update).getCheck2() != check2B) {
+                        createDialog();
+                    } else if (Books.get(update).getCheck3() != check3B) {
+                        createDialog();
+                    } else if (Books.get(update).getCheck4() != check4B) {
+                        createDialog();
+                    } else if (!Books.get(update).getRarity().equals(Text.toString())) {
+                        createDialog();
+                    } else if (!Books.get(update).getCover().equals(radioButton.getText().toString())) {
+                        createDialog();
+                    } else if (Books.get(update).getPages() != Integer.parseInt(Pages.getText().toString())) {
+                        createDialog();
+                    } else {
+                        Add_activity.this.finish();
+                    }
+                }else{
+                    if(check1.isChecked()){
 
-                     return false;
-                }else if(!Validation.isValidPages(Pages.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas puslapiu kiekis", Toast.LENGTH_LONG).show();
-                    return false;
-                }else if(!Validation.isValidYear(releaseyear.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas metu formatas", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                else if(!(check1.isChecked()||check2.isChecked()||check3.isChecked()||check4.isChecked()))
-                {
-                    Toast.makeText(getApplicationContext(),
-                            "Nepasirinktas žanras", Toast.LENGTH_LONG).show();
-                     return false;
-                }else { if (check1.isChecked()){
-                    checkString = checkString  +  " " + check1.getText().toString();
-                   check1B = 1;
-                }if(check2.isChecked()){
-                    checkString  = checkString + ", " + check2.getText().toString();
-                    check2B = 1;
-                }if (check3.isChecked()){
-                    checkString  = checkString + ", " +  check3.getText().toString();
-                    check3B = 1;
-                }if (check4.isChecked()){
-                    checkString  = checkString + ", "+  check4.getText().toString();
-                    check4B = 1;
-                }
+                        check1B1 = 1;
+                    }else{
+                        check1B1 = 0;
+                    }
+                    if(check2.isChecked()){
 
-                    return true;
-                }
+                        check2B1 = 1;
+                    }else{
+                        check2B1 = 0;
+                    }
+                    if(check3.isChecked()){
 
-            case "update":
-                if(!Validation.isValidClientNameForAdd(name.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas vardas", Toast.LENGTH_LONG).show();
-                    return false;
-                }else if(!Validation.isValidAuthor(Author.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas Autorio vardas", Toast.LENGTH_LONG).show();
+                        check3B1 = 1;
+                    }else{
+                        check3B1 = 0;
+                    }
+                    if(check4.isChecked()){
 
-                    return false;
-                }else if(!Validation.isValidPages(Pages.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas puslapiu kiekis", Toast.LENGTH_LONG).show();
-                    return false;
-                }else if(!Validation.isValidYear(releaseyear.getText().toString())){
-                    Toast.makeText(getApplicationContext(),
-                            "Netinkamas metu formatas", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                else if(!(check1.isChecked()||check2.isChecked()||check3.isChecked()||check4.isChecked()))
-                {
-                    Toast.makeText(getApplicationContext(),
-                            "Nepasirinktas žanras", Toast.LENGTH_LONG).show();
-                    return false;
-                }else { if (check1.isChecked()){
-                    checkString = checkString + " " + check1.getText().toString();
-                    check1B = 1;
-                }if(check2.isChecked()){
-                    checkString  = checkString + ", " + check2.getText().toString();
-                    check2B = 1;
-                }if (check3.isChecked()){
-                    checkString  = checkString + ", " + check3.getText().toString();
-                    check3B = 1;
-                }if (check4.isChecked()){
-                    checkString  = checkString + ", " +  check4.getText().toString();
-                    check4B = 1;
-                }
+                        check4B1 = 1;
+                    }else{
+                        check4B1 = 0;
+                    }
+                    Knyga knygaDefault = new Knyga("","","","Documentary","Common",0,"Hard",1,0,0,0);
+                    selectedId1 = radioGroup.getCheckedRadioButtonId();
+                    radioButton1 = (RadioButton) findViewById(selectedId1);
 
-                    return true;
+                    knygaSubmitted = new Knyga(name.getText().toString(),
+                            releaseyear.getText().toString(),
+                            Author.getText().toString(),
+                            checkString,
+                            Text,
+                            Integer.parseInt(Pages.getText().toString()),
+                            radioButton1.getText().toString(),
+                            check1B1,check2B1,check3B1,check4B1);
+                    if (!knygaDefault.getName().equals(name.getText().toString())){
+                        createDialog();
+                    }
+                    else if(!knygaDefault.getRelease_year().equals(releaseyear.getText().toString())){
+                        createDialog();
+                    }
+                    else if(!knygaDefault.getAuthor().equals(Author.getText().toString())){
+                        createDialog();
+                    }
+                    else if(knygaDefault.getCheck1() !=knygaSubmitted.getCheck1()){
+                        createDialog();
+                    }
+                    else if(knygaDefault.getCheck2() != knygaSubmitted.getCheck2()){
+                        createDialog();
+                    }
+                    else if(knygaDefault.getCheck3() != knygaSubmitted.getCheck3()){
+                        createDialog();
+                    }
+                    else if(knygaDefault.getCheck4() != knygaSubmitted.getCheck4()){
+                        createDialog();
+                    }
+                    else if(!knygaDefault.getRarity().equals(knygaSubmitted.getRarity())){
+                        createDialog();
+                    }
+                    else if(!knygaDefault.getCover().equals(knygaSubmitted.getCover().toString())){
+                        createDialog();
+                    }
+                    else if(knygaDefault.getPages() != knygaSubmitted.getPages())
+                    {
+                        createDialog();
+                    }
+                    else{
+                        Add_activity.this.finish();
+                    }
                 }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 
+    @Override
+    public void onBackPressed() {
 
-}
+    }
+    public void createDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                Add_activity.this);
+        // set title
+        alertDialogBuilder.setTitle("Unsaved changes.");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Click yes to save")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        Add_activity.this.finish();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+    private boolean knyga_validate() {
+        checkString = "";
+                if(!Validation.isValidBookNameForAdd(name.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Improper Book Name", Toast.LENGTH_LONG).show();
+                    return false;
+                }else if(!Validation.isValidAuthor(Author.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Improper Author's Name", Toast.LENGTH_LONG).show();
+
+                     return false;
+                }else if(!Validation.isValidPages(Pages.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Invalid pages amount (1-9999)", Toast.LENGTH_LONG).show();
+                    return false;
+                }else if(!Validation.isValidYear(releaseyear.getText().toString())){
+                    Toast.makeText(getApplicationContext(),
+                            "Invalid Date", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                else if(!(check1.isChecked()||check2.isChecked()||check3.isChecked()||check4.isChecked()))
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Genre not selected", Toast.LENGTH_LONG).show();
+                     return false;
+                }else { if (check1.isChecked()) {
+                    checkString = checkString + " " + check1.getText().toString();
+                    check1B = 1;
+                }else{
+                        check1.setChecked(false);
+                        check1B = 0;
+                    }
+                if(check2.isChecked()) {
+                    checkString = checkString + ", " + check2.getText().toString();
+                    check2B = 1;
+                } else{
+                        check1.setChecked(false);
+                        check2B = 0;
+                    }
+                }if (check3.isChecked()) {
+                    checkString = checkString + ", " + check3.getText().toString();
+                    check3B = 1;
+                }else{
+                        check1.setChecked(false);
+                        check3B = 0;
+                    }
+                if (check4.isChecked()){
+                    checkString  = checkString + ", "+  check4.getText().toString();
+                    check4B = 1;
+                }else{
+                    check1.setChecked(false);
+                    check4B = 0;
+                }
+                    return true;
+                }
+    }
+

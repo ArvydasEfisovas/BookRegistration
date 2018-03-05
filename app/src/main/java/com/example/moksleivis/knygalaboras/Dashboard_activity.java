@@ -25,6 +25,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,14 +38,11 @@ import java.util.List;
 public class Dashboard_activity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     Button button;
-
     DatabaseHandler db = new DatabaseHandler(this);
-
     List<Knyga> Books;
     private RecyclerView recyclerView;
     private KnygaAdapter mAdapter;
     SearchView searchView = null;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +55,7 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,10 +64,26 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
                 Intent intent1 = new Intent(getBaseContext(), Add_activity.class);
                 intent1.putExtra("add_item_id",  add_item_id);
                 startActivity(intent1);
+
             }
         });
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent2 = new Intent(getBaseContext(), Login_activity.class);
+                startActivity(intent2);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onBackPressed() {
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,11 +94,6 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
                         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
                         searchView.setOnQueryTextListener(this);
                 return true;
-            }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-               return super.onOptionsItemSelected(item);
             }
 
     @Override
@@ -102,15 +113,8 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
             if(name.contains(newText)){
                 newList.add(knyga);
             }
-
         }
       mAdapter.setFilter(newList);
         return true;
     }
-
-
-
-
-
-
 }

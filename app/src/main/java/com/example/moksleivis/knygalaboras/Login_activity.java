@@ -23,12 +23,8 @@ public class Login_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login_activity);
-
-
-// cia tuscia eilute
-        //cia tuscia eilute
-
         mEdit   = (EditText)findViewById(R.id.login_pokemon_name);
         mEdit2   = (EditText)findViewById(R.id.editText);
         button = (Button) findViewById(R.id.buttonToast);
@@ -37,14 +33,13 @@ public class Login_activity extends AppCompatActivity {
 
         loginPreferences = getSharedPreferences("com.example.moksleivis.knygalaboras", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
-
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
+
         if (saveLogin == true) {
             mEdit.setText(loginPreferences.getString("username", ""));
             mEdit2.setText(loginPreferences.getString("password", ""));
             rememberMe.setChecked(true);
         }
-
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,9 +47,6 @@ public class Login_activity extends AppCompatActivity {
                 startActivity(new Intent(Login_activity.this, Register_activity.class));
             }
         });
-
-
-
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -71,26 +63,23 @@ public class Login_activity extends AppCompatActivity {
                     loginPrefsEditor.commit();
                 }
 
-
-
                 User userForLogin = db.getUserForLogin(mEdit.getText().toString(),mEdit2.getText().toString());
                 if(!Validation.isValidCredentials(mEdit.getText().toString())){
                     Toast.makeText(getApplicationContext(),
-                            "Netinkamas vardas arba slaptazodis", Toast.LENGTH_LONG).show();
+                            "Invalid Name Or Password", Toast.LENGTH_LONG).show();
                 }else if(!Validation.isValidCredentials(mEdit2.getText().toString())){
                     Toast.makeText(getApplicationContext(),
-                            "Netinkamas vardas arba slaptazodis", Toast.LENGTH_LONG).show();
-                }else if(!mEdit2.getText().toString().equals(userForLogin.getPhoneNumber())){
+                            "Invalid Name Or Password", Toast.LENGTH_LONG).show();
+                }else if(!mEdit2.getText().toString().equals(userForLogin.getPassword())){
                     Toast.makeText(getApplicationContext(),
-                            "Netinkamas vardas arba slaptazodis", Toast.LENGTH_LONG).show();
+                            "Invalid Name Or Password", Toast.LENGTH_LONG).show();
 
                 }
                else if(userForLogin.getName() !=null) {
-
                     startActivity(new Intent(Login_activity.this, Dashboard_activity.class));
                 }else{
                    Toast.makeText(getApplicationContext(),
-                          "Toks vartotojas neegzistuoja", Toast.LENGTH_LONG).show();
+                          "User already exists", Toast.LENGTH_LONG).show();
                }
 
             }

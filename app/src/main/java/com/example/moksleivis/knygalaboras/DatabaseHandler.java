@@ -17,20 +17,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 3;
-
     // Database Name
     private static final String DATABASE_NAME = "db";
-
     // Contacts table name
     private static final String TABLE_USERS = "users";
     private static final String TABLE_BOOKS = "books";
-
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_password = "password";
     private static final String KEY_email = "email";
-
     private static final String name = "name";
     private static final String release_year  = "release_year";
     private static final String author ="author";
@@ -54,9 +50,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                + KEY_password + " TEXT," + KEY_email  +")";
        db.execSQL(CREATE_CONTACTS_TABLE);
-
-
-
         String CREATE_BOOKS_TABLE = "CREATE TABLE " + TABLE_BOOKS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + name + " TEXT,"
                 + release_year + " TEXT," + author  + " TEXT," +  genre +
@@ -75,17 +68,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     */
-
     // Adding new user
     void addUsers(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, user.getName());
-        values.put(KEY_password, user.getPhoneNumber());
+        values.put(KEY_password, user.getPassword());
         values.put(KEY_email, user.getEmail());
         db.insert(TABLE_USERS, null, values);
         db.close();
@@ -93,7 +81,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     void addBook(Knyga knyga) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(name, knyga.getName());
         values.put(release_year, knyga.getRelease_year());
@@ -112,13 +99,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     User getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID,
                         KEY_NAME, KEY_password,KEY_email}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-
         User user = new User(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2),cursor.getString(3));
         // return user
@@ -132,19 +117,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         KEY_NAME, KEY_password,KEY_email}, KEY_NAME + "=?" + " AND " + KEY_password  + "=?" ,
                 new String[] { String.valueOf(name),String.valueOf(password)}, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()){
-
-
          user = new User(cursor.getString(0),
                 cursor.getString(1), cursor.getString(2));
         }
         return user;
     }
 
-
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<User>();
         String selectQuery = "SELECT  * FROM " + TABLE_USERS;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -153,7 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 User user = new User();
                 user.setID(Integer.parseInt(cursor.getString(0)));
                 user.setName(cursor.getString(1));
-                user.setPhoneNumber(cursor.getString(2));
+                user.setPassword(cursor.getString(2));
                 user.setEmail(cursor.getString(3));
                 userList.add(user);
             } while (cursor.moveToNext());
@@ -161,13 +142,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return userList;
     }
 
-
-
     public List<Knyga> getAllBooks() {
         List<Knyga> bookList = new ArrayList<Knyga>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_BOOKS;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -181,10 +159,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 knyga.setRarity(cursor.getString(5));
                 knyga.setPages(Integer.parseInt((cursor.getString(6))));
                 knyga.setCover(cursor.getString(7));
-               knyga.setCheck1(Integer.parseInt((cursor.getString(8))));
-               knyga.setCheck2(Integer.parseInt((cursor.getString(9))));
-             knyga.setCheck3(Integer.parseInt((cursor.getString(10))));
-              knyga.setCheck4(Integer.parseInt((cursor.getString(11))));
+                knyga.setCheck1(Integer.parseInt((cursor.getString(8))));
+                knyga.setCheck2(Integer.parseInt((cursor.getString(9))));
+                knyga.setCheck3(Integer.parseInt((cursor.getString(10))));
+                knyga.setCheck4(Integer.parseInt((cursor.getString(11))));
                 bookList.add(knyga);
             } while (cursor.moveToNext());
         }
@@ -193,10 +171,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, user.getName());
-        values.put(KEY_password, user.getPhoneNumber());
+        values.put(KEY_password, user.getPassword());
         values.put(KEY_email, user.getEmail());
         // updating row
         return db.update(TABLE_USERS, values, KEY_ID + " = ?",
@@ -205,7 +182,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void updateBook(Knyga knyga) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(name, knyga.getName()); // User Name
         values.put(release_year, knyga.getRelease_year()); // User Phone
@@ -219,7 +195,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(check3,knyga.getCheck3());
         values.put(check4,knyga.getCheck4());
          db.update(TABLE_BOOKS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(knyga.getId()+1)});
+                 new String[] { String.valueOf(knyga.getId()+1)});
          db.close();
     }
 
@@ -242,7 +218,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-
         // return count
         return cursor.getCount();
     }

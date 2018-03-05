@@ -19,10 +19,7 @@ import java.util.List;
 
 public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private LayoutInflater inflater;
-    public List<Knyga>Knygos = Collections.emptyList();
-
-
+    private List<Knyga>Knygos = Collections.emptyList();
     public KnygaAdapter(Context context,List<Knyga> KnygaList) {
         this.Knygos = KnygaList;
         this.context = context;
@@ -33,9 +30,7 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                View view = LayoutInflater.from(context).inflate(R.layout.row,parent,false);
         MyHolder holder = new MyHolder(view);
                 return holder;
-            }
-
-
+        }
 
     @Override
     public void  onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -46,7 +41,6 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder1.release_year.setText("Release Date : "+ knyga.getRelease_year());
         holder1.author.setText("Author : " + knyga.getAuthor());
         holder1.pages.setText("Pages : " + knyga.getPages());
-
     }
 
     @Override
@@ -57,23 +51,21 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Knygos = new ArrayList<>();
         Knygos.addAll(newList);
         notifyDataSetChanged();
-
     }
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView name, release_year, author,genre,pages;
+        private TextView name, release_year, author,genre,pages;
                public MyHolder(View itemView){
                        super(itemView);
-
                    name = (TextView) itemView.findViewById(R.id.title);
                    release_year = (TextView) itemView.findViewById(R.id.year);
                    author = (TextView) itemView.findViewById(R.id.author);
                    genre = (TextView) itemView.findViewById(R.id.genre);
                    pages = (TextView) itemView.findViewById(R.id.pages);
                       itemView.setOnClickListener(this);
-                   }
+               }
 
-               @Override
+        @Override
         public void onClick(View v) {
                    int itemPosition = getAdapterPosition();
                             // TODO: siųsti pasirinkto pokemono objektą vietoj id
