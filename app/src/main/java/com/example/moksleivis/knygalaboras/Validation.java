@@ -9,9 +9,7 @@ import java.util.regex.Pattern;
 
 public class Validation {
 
-    private static final String VALID_ID_REGEX ="^[0-9]{1,7}$";
-    private static final String VALID_CLIENTNAME_ADD_REGEX ="^[A-Za-z0-9_ ąčęėįšųĄČĘĖĮŠŲŪ]{1,100}$";
-    private static final String VALID_CLIENTNAME_SEARCH_REGEX ="^[A-Za-z0-9_ ąčęėįšųĄČĘĖĮŠŲŪ]{1,100}$";
+    private static final String VALID_BOOKNAME_ADD_REGEX ="^[A-Za-z0-9_ ąčęėįšųĄČĘĖĮŠŲŪ]{1,100}$";
     private static final String VALID_CREDENTIALS_REGEX ="^[A-Za-z0-9.-_ąčęėįšųĄČĘĖĮŠŲŪ ]{5,30}$";
     private static final String VALID_EMAIL_ADDRESS_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$";
     private static final String VALID_YEAR = "^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$";
@@ -35,8 +33,8 @@ public class Validation {
         Matcher yearMatcher = yearPattern.matcher(year);
         return yearMatcher.find();
     }
-    public static boolean isValidClientNameForAdd(String Pokemon){
-        Pattern PokemonNamePattern = Pattern.compile(VALID_CLIENTNAME_ADD_REGEX);
+    public static boolean isValidBookNameForAdd(String Pokemon){
+        Pattern PokemonNamePattern = Pattern.compile(VALID_BOOKNAME_ADD_REGEX);
         Matcher PokemonNameMatcher = PokemonNamePattern.matcher(Pokemon);
         return PokemonNameMatcher.find();
     }

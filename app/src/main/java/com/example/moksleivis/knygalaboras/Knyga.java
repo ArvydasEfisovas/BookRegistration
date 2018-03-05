@@ -3,12 +3,6 @@ package com.example.moksleivis.knygalaboras;
 /**
  * Created by arvyd on 1/21/2018.
  */
-
-
-
-//pridejau eiluciu
-
-    //eilutes
 public class Knyga {
     private int id;
     private String name;
@@ -22,10 +16,6 @@ public class Knyga {
     private int check2;
     private int check3;
     private int check4;
-
-
-
-
 
     public int getId() {
         return id;
@@ -113,7 +103,6 @@ public class Knyga {
         super();
         this.id = id;
         this.name = name;
-
         this.release_year = release_year;
         this.pages = pages;
         this.author = author;
@@ -125,7 +114,6 @@ public class Knyga {
                  String cover,int check1,int check2,int check3,int check4) {
         super();
         this.name = name;
-
         this.release_year = release_year;
         this.pages = pages;
         this.author = author;
@@ -153,10 +141,6 @@ public class Knyga {
         this.check3 = check3;
         this.check4 = check4;
     }
-
-
-
-
     public Knyga() {
         super();
     }
