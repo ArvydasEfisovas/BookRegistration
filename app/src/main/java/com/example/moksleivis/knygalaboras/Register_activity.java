@@ -26,10 +26,10 @@ import android.widget.Toast;
             setContentView(R.layout.activity_register_activity);
 
 
-            mEdit   = (EditText)findViewById(R.id.register_pokemon_name);
-            mEdit2   = (EditText)findViewById(R.id.register_pokemon_password);
-            mEdit3   = (EditText)findViewById(R.id.register_pokemon_repeat_password);
-            mEdit4   = (EditText)findViewById(R.id.register_pokemon_email);
+            mEdit   = (EditText)findViewById(R.id.register_name);
+            mEdit2   = (EditText)findViewById(R.id.register_password);
+            mEdit3   = (EditText)findViewById(R.id.register_repeat_password);
+            mEdit4   = (EditText)findViewById(R.id.register_email);
 
 
 

@@ -188,7 +188,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 bookList.add(knyga);
             } while (cursor.moveToNext());
         }
-
         return bookList;
     }
 

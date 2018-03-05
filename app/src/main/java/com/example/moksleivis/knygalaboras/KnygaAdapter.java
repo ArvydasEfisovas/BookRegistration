@@ -82,13 +82,5 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                    intent.putExtra("item_id",  Knygos.get(itemPosition).getId());
                    context.startActivity(intent);
                     }
-
     }
-
-
-
-
-
-
-
 }

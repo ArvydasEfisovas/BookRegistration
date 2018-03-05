@@ -1,6 +1,7 @@
 package com.example.moksleivis.knygalaboras;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -93,6 +94,9 @@ public class Add_activity extends AppCompatActivity {
 
         if(update >-1){
             addButton.setEnabled(false);
+            addButton.setBackgroundResource(R.drawable.disabledbutton);
+            updateButton.setBackgroundResource(R.drawable.enabledbutton);
+            deleteButton.setBackgroundResource(R.drawable.enabledbutton);
             name.setText(Books.get(update).getName().toString());
             releaseyear.setText(Books.get(update).getRelease_year().toString());
             Author.setText(Books.get(update).getAuthor().toString());
@@ -123,6 +127,9 @@ public class Add_activity extends AppCompatActivity {
         }else if(add== -1){
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
+            addButton.setBackgroundResource(R.drawable.enabledbutton);
+            updateButton.setBackgroundResource(R.drawable.disabledbutton);
+            deleteButton.setBackgroundResource(R.drawable.disabledbutton);
         }
 
         addButton.setOnClickListener(new View.OnClickListener() {

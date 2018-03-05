@@ -29,11 +29,6 @@ public class Validation {
         Matcher emailMatcher = emailPattern.matcher(email);
         return emailMatcher.find();
     }
-    public static boolean isValidID(String ID){
-        Pattern IDPattern = Pattern.compile(VALID_ID_REGEX);
-        Matcher IDMatcher = IDPattern.matcher(ID);
-        return IDMatcher.find();
-    }
 
     public static boolean isValidYear(String year){
         Pattern yearPattern = Pattern.compile(VALID_YEAR);
@@ -54,12 +49,5 @@ public class Validation {
         Pattern pagesPattern = Pattern.compile(VALID_PAGES);
         Matcher pagesMatcher = pagesPattern.matcher(pages);
         return pagesMatcher.find();
-    }
-
-
-    public static boolean isValidClientNameForSearch(String Pokemon){
-        Pattern PokemonNamePattern = Pattern.compile(VALID_CLIENTNAME_SEARCH_REGEX);
-        Matcher PokemonNameMatcher = PokemonNamePattern.matcher(Pokemon);
-        return PokemonNameMatcher.find();
     }
 }

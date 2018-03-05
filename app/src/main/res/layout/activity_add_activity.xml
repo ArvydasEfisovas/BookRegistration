@@ -40,14 +40,29 @@
         android:inputType="textPersonName"
         android:hint="year/mm/dd"/>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Author"
-        android:textColor="@color/text"/>
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pages"
+            android:textColor="@color/text" />
 
-    <EditText
+        <EditText
+            android:id="@+id/pages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter page amount"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Author"
+            android:textColor="@color/text" />
+
+        <EditText
         android:id="@+id/author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,21 +70,7 @@
         android:inputType="textPersonName"
         android:hint="Enter author's name"/>
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pages"
-        android:textColor="@color/text"/>
-
-    <EditText
-        android:id="@+id/pages"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Enter page amount"/>
-    <TextView
+        <TextView
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -159,6 +160,7 @@
             android:layout_height="wrap_content"
             android:text="delete"
             android:background="@drawable/my_button_bg"
+            
             android:textColor="@color/text"/>
 
 
