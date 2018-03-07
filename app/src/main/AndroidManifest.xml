@@ -15,31 +15,37 @@
             android:name="android.app.default_searchable"
             android:value=".Dashboard_activity"/>
 
-        <activity android:name=".Dashboard_activity" android:launchMode="singleTop">
+
+        <activity android:name=".Dashboard_activity" android:launchMode="singleTop"
+            android:screenOrientation="portrait">
                    <intent-filter>
                        <action android:name="android.intent.action.SEARCH"/>
                        <action android:name="android.intent.action.VIEW"/>
                    </intent-filter>
                        <meta-data
-                            android:name="android.app.searchable"
+                           android:name="android.app.searchable"
                            android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".Login_activity">
+        <activity android:name=".Login_activity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register_activity">
+
+        <activity android:name=".Register_activity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".Add_activity">
+        <activity android:name=".Add_activity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-
+        <service android:enabled="true" android:name=".BackgroundSoundService" />
     </application>
 
 </manifest>

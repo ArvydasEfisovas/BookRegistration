@@ -23,7 +23,8 @@ import java.util.List;
  */
 
 public class Add_activity extends AppCompatActivity {
-
+    Intent svc;
+    boolean checkactivity;
     String Text;
     EditText name;
     EditText releaseyear;
@@ -62,6 +63,9 @@ public class Add_activity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkactivity = false;
+        svc  = new Intent(this,BackgroundSoundService.class);
+
         setContentView(R.layout.activity_add_activity);
          db = new DatabaseHandler(getApplicationContext());
         name   = (EditText)findViewById(R.id.name);
@@ -186,6 +190,7 @@ public class Add_activity extends AppCompatActivity {
                     radioButton2 = (RadioButton) findViewById(selectedId2);
                     db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                             checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton2.getText().toString(),check1B1,check2B1,check3B1,check4B1));
+                    checkactivity = true;
                     Intent intent2 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent2);
                     finish();
@@ -205,6 +210,7 @@ public class Add_activity extends AppCompatActivity {
                     radioButton = (RadioButton) findViewById(selectedId);
                          db.updateBook(new Knyga(update, name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
                             checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
+                    checkactivity = true;
                     Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent3);
                     finish();
@@ -218,7 +224,8 @@ public class Add_activity extends AppCompatActivity {
             public void onClick(View arg0) {
 
                 db.deleteBooks(String.valueOf(delete));
-                    Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
+                checkactivity = true;
+                Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
                     startActivity(intent3);
                     finish();
                 }
@@ -277,6 +284,7 @@ public class Add_activity extends AppCompatActivity {
                     } else if (Books.get(update).getPages() != Integer.parseInt(Pages.getText().toString())) {
                         createDialog();
                     } else {
+                        checkactivity = true;
                         Add_activity.this.finish();
                     }
                 }else{
@@ -348,6 +356,7 @@ public class Add_activity extends AppCompatActivity {
                         createDialog();
                     }
                     else{
+                        checkactivity = true;
                         Add_activity.this.finish();
                     }
                 }
@@ -355,6 +364,28 @@ public class Add_activity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!checkactivity) {
+            stopService(svc);
+        }
+    }
+    @Override
+    protected void onUserLeaveHint()
+    {
+        Log.d("onUserLeaveHint","Home button pressed");
+        super.onUserLeaveHint();
+        onPause();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(svc);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +45,12 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
     private KnygaAdapter mAdapter;
     SearchView searchView = null;
 
+    private Intent svc;
+    boolean checkactivity;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkactivity = false;
         setContentView(R.layout.activity_dashboard_activity);
         button = (Button) findViewById(R.id.prideti);
          Books = db.getAllBooks();
@@ -56,22 +61,24 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        svc  = new Intent(this,BackgroundSoundService.class);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 int add_item_id = -1;
+                checkactivity = true;
                 Intent intent1 = new Intent(getBaseContext(), Add_activity.class);
                 intent1.putExtra("add_item_id",  add_item_id);
                 startActivity(intent1);
-
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                checkactivity = true;
                 Intent intent2 = new Intent(getBaseContext(), Login_activity.class);
                 startActivity(intent2);
                 finish();
@@ -116,5 +123,25 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
         }
       mAdapter.setFilter(newList);
         return true;
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+           if(!checkactivity) {
+               stopService(svc);
+           }
+    }
+    @Override
+    protected void onUserLeaveHint()
+    {
+        Log.d("onUserLeaveHint","Home button pressed");
+        super.onUserLeaveHint();
+        onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(svc);
     }
 }
