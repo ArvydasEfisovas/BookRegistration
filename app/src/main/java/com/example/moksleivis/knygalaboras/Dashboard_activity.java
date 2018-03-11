@@ -44,7 +44,6 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
     private RecyclerView recyclerView;
     private KnygaAdapter mAdapter;
     SearchView searchView = null;
-
     private Intent svc;
     boolean checkactivity;
 
@@ -70,6 +69,7 @@ public class Dashboard_activity extends AppCompatActivity implements SearchView.
                 Intent intent1 = new Intent(getBaseContext(), Add_activity.class);
                 intent1.putExtra("add_item_id",  add_item_id);
                 startActivity(intent1);
+                finish();
             }
         });
     }

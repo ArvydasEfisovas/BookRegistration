@@ -285,6 +285,8 @@ public class Add_activity extends AppCompatActivity {
                         createDialog();
                     } else {
                         checkactivity = true;
+                        Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
+                        startActivity(intent1);
                         Add_activity.this.finish();
                     }
                 }else{
@@ -357,6 +359,8 @@ public class Add_activity extends AppCompatActivity {
                     }
                     else{
                         checkactivity = true;
+                        Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
+                        startActivity(intent1);
                         Add_activity.this.finish();
                     }
                 }
@@ -451,6 +455,7 @@ public class Add_activity extends AppCompatActivity {
                 }else { if (check1.isChecked()) {
                     checkString = checkString + " " + check1.getText().toString();
                     check1B = 1;
+                    check1B1 = 1;
                 }else{
                         check1.setChecked(false);
                         check1B = 0;
@@ -458,22 +463,25 @@ public class Add_activity extends AppCompatActivity {
                 if(check2.isChecked()) {
                     checkString = checkString + ", " + check2.getText().toString();
                     check2B = 1;
+                    check2B1 = 1;
                 } else{
-                        check1.setChecked(false);
+                        check2.setChecked(false);
                         check2B = 0;
                     }
                 }if (check3.isChecked()) {
                     checkString = checkString + ", " + check3.getText().toString();
                     check3B = 1;
+                    check3B1 = 1;
                 }else{
-                        check1.setChecked(false);
+                        check3.setChecked(false);
                         check3B = 0;
                     }
                 if (check4.isChecked()){
                     checkString  = checkString + ", "+  check4.getText().toString();
                     check4B = 1;
+                    check4B1 = 1;
                 }else{
-                    check1.setChecked(false);
+                    check4.setChecked(false);
                     check4B = 0;
                 }
                     return true;

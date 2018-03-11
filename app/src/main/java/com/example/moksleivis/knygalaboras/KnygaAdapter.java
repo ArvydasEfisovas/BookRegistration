@@ -1,5 +1,6 @@
 package com.example.moksleivis.knygalaboras;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -73,6 +74,7 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                    intent.putExtra("item_id_position",  itemPosition);
                    intent.putExtra("item_id",  Knygos.get(itemPosition).getId());
                    context.startActivity(intent);
+                    ((Activity)context).finish();
                     }
     }
 }
