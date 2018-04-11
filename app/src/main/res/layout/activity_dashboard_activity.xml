@@ -8,7 +8,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@drawable/bookbackground"
 tools:showIn="@layout/activity_dashboard_activity"
-tools:context=".Dashboard_activity">
+tools:context=".View.Dashboard_activity">
 
     <Button
         android:id="@+id/prideti"

@@ -1,8 +1,7 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.View;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +10,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.moksleivis.knygalaboras.Service.BackgroundSoundService;
+import com.example.moksleivis.knygalaboras.Model.DatabaseHandler;
+import com.example.moksleivis.knygalaboras.Model.User;
+import com.example.moksleivis.knygalaboras.R;
+import com.example.moksleivis.knygalaboras.Controller.Validation;
 
 public class Login_activity extends AppCompatActivity {
     private Button button;

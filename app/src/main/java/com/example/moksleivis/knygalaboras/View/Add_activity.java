@@ -1,4 +1,4 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.View;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.app.AlertDialog;
+
+import com.example.moksleivis.knygalaboras.Service.BackgroundSoundService;
+import com.example.moksleivis.knygalaboras.Model.DatabaseHandler;
+import com.example.moksleivis.knygalaboras.Model.Knyga;
+import com.example.moksleivis.knygalaboras.R;
+import com.example.moksleivis.knygalaboras.Controller.Validation;
+
 import java.util.List;
 
 /**
@@ -53,6 +60,7 @@ public class Add_activity extends AppCompatActivity {
     int check4B1 = 0;
     int add;
     int update;
+    int update2;
     int delete;
     List<Knyga> Books;
     DatabaseHandler db;
@@ -60,7 +68,6 @@ public class Add_activity extends AppCompatActivity {
     int selectedId1 ;
     int selectedId2 ;
     Knyga knygaSubmitted;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkactivity = false;
@@ -84,9 +91,12 @@ public class Add_activity extends AppCompatActivity {
         spin = (Spinner)findViewById(R.id.spinner1) ;
         add = getIntent().getIntExtra("add_item_id",-1);
         update = getIntent().getIntExtra("item_id_position",-1);
-        delete = getIntent().getIntExtra("item_id",-1);
+        update2 = getIntent().getIntExtra("item_id",-1);
+        Toast.makeText(this, String.valueOf(update2), Toast.LENGTH_SHORT).show();
+        delete = getIntent().getIntExtra("item_id_delete",-1);
         Books = db.getAllBooks();
         Pages.setText("0");
+        setActivityFields();
         // find the radiobutton by returned id
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -97,7 +107,93 @@ public class Add_activity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        addButton.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View arg0) {
+                if(knyga_validate()){
+                    selectedId2 = radioGroup.getCheckedRadioButtonId();
+                    radioButton2 = (RadioButton) findViewById(selectedId2);
+                    db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
+                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton2.getText().toString(),check1B1,check2B1,check3B1,check4B1));
+                    checkactivity = true;
+                    Intent intent2 = new Intent(Add_activity.this, Dashboard_activity.class);
+                    startActivity(intent2);
+                    finish();
+                }
+            }
+        });
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                // find the radiobutton by returned id
+                radioButton = (RadioButton) findViewById(selectedId);
+                if(knyga_validate()){
+                    radioButton = (RadioButton) findViewById(selectedId);
+                         db.updateBook(new Knyga(update2, name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
+                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
+                    checkactivity = true;
+                    Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
+                    startActivity(intent3);
+                    finish();
+                }
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                db.deleteBooks(String.valueOf(delete));
+                checkactivity = true;
+                Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
+                    startActivity(intent3);
+                    finish();
+                }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                checkIfChangesMade();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!checkactivity) {
+            stopService(svc);
+        }
+    }
+    @Override
+    protected void onUserLeaveHint()
+    {
+        Log.d("onUserLeaveHint","Home button pressed");
+        super.onUserLeaveHint();
+        onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(svc);
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    private void setActivityFields(){
         if(update >-1){
             addButton.setEnabled(false);
             addButton.setBackgroundResource(R.drawable.disabledbutton);
@@ -147,255 +243,146 @@ public class Add_activity extends AppCompatActivity {
             }
 
         }else if(add== -1){
-           knygaSubmitted = new Knyga();
+            knygaSubmitted = new Knyga();
             knygaSubmitted.setPages(0);
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
             addButton.setBackgroundResource(R.drawable.enabledbutton);
             updateButton.setBackgroundResource(R.drawable.disabledbutton);
             deleteButton.setBackgroundResource(R.drawable.disabledbutton);
+        }
+    }
+    private void checkIfChangesMade(){
+        if(update > -1) {
             if(check1.isChecked()){
                 check1.setChecked(true);
+                check1B = 1;
+            }else{
+                check1B = 0;
+            }
+            if(check2.isChecked()){
+                check2.setChecked(true);
+                check2B = 1;
+            }else{
+                check2B = 0;
+            }
+            if(check3.isChecked()){
+                check3.setChecked(true);
+                check3B = 1;
+            }else{
+                check3B = 0;
+            }
+            if(check4.isChecked()){
+                check4.setChecked(true);
+                check4B = 1;
+            }else{
+                check4B = 0;
+            }
+            selectedId = radioGroup.getCheckedRadioButtonId();
+            radioButton = (RadioButton) findViewById(selectedId);
+            if (!Books.get(update).getName().equals(name.getText().toString())) {
+                createDialog();
+            } else if (!Books.get(update).getRelease_year().equals(releaseyear.getText().toString())) {
+                createDialog();
+            } else if (!Books.get(update).getAuthor().equals(Author.getText().toString())) {
+                createDialog();
+            } else if (Books.get(update).getCheck1() != check1B) {
+                createDialog();
+            } else if (Books.get(update).getCheck2() != check2B) {
+                createDialog();
+            } else if (Books.get(update).getCheck3() != check3B) {
+                createDialog();
+            } else if (Books.get(update).getCheck4() != check4B) {
+                createDialog();
+            } else if (!Books.get(update).getRarity().equals(Text.toString())) {
+                createDialog();
+            } else if (!Books.get(update).getCover().equals(radioButton.getText().toString())) {
+                createDialog();
+            } else if (Books.get(update).getPages() != Integer.parseInt(Pages.getText().toString())) {
+                createDialog();
+            } else {
+                checkactivity = true;
+                Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
+                startActivity(intent1);
+                Add_activity.this.finish();
+            }
+        }else{
+            if(check1.isChecked()){
+
                 check1B1 = 1;
             }else{
                 check1B1 = 0;
             }
             if(check2.isChecked()){
-                check2.setChecked(true);
+
                 check2B1 = 1;
             }else{
                 check2B1 = 0;
             }
             if(check3.isChecked()){
-                check3.setChecked(true);
+
                 check3B1 = 1;
             }else{
                 check3B1 = 0;
             }
             if(check4.isChecked()){
-                check4.setChecked(true);
+
                 check4B1 = 1;
             }else{
                 check4B1 = 0;
             }
-        }
+            Knyga knygaDefault = new Knyga("","","","Documentary","Common",0,"Hard",1,0,0,0);
+            selectedId1 = radioGroup.getCheckedRadioButtonId();
+            radioButton1 = (RadioButton) findViewById(selectedId1);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                if(knyga_validate()){
-                    selectedId2 = radioGroup.getCheckedRadioButtonId();
-                    radioButton2 = (RadioButton) findViewById(selectedId2);
-                    db.addBook(new Knyga(name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
-                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton2.getText().toString(),check1B1,check2B1,check3B1,check4B1));
-                    checkactivity = true;
-                    Intent intent2 = new Intent(Add_activity.this, Dashboard_activity.class);
-                    startActivity(intent2);
-                    finish();
-                }
+            knygaSubmitted = new Knyga(name.getText().toString(),
+                    releaseyear.getText().toString(),
+                    Author.getText().toString(),
+                    checkString,
+                    Text,
+                    Integer.parseInt(Pages.getText().toString()),
+                    radioButton1.getText().toString(),
+                    check1B1,check2B1,check3B1,check4B1);
+            if (!knygaDefault.getName().equals(name.getText().toString())){
+                createDialog();
             }
-        });
-
-        updateButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-                // find the radiobutton by returned id
-                radioButton = (RadioButton) findViewById(selectedId);
-
-                if(knyga_validate()){
-                    radioButton = (RadioButton) findViewById(selectedId);
-                         db.updateBook(new Knyga(update, name.getText().toString(), releaseyear.getText().toString(), Author.getText().toString(),
-                            checkString, Text, Integer.parseInt(Pages.getText().toString()), radioButton.getText().toString(),check1B,check2B,check3B,check4B));
-                    checkactivity = true;
-                    Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
-                    startActivity(intent3);
-                    finish();
-                }
+            else if(!knygaDefault.getRelease_year().equals(releaseyear.getText().toString())){
+                createDialog();
             }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                db.deleteBooks(String.valueOf(delete));
+            else if(!knygaDefault.getAuthor().equals(Author.getText().toString())){
+                createDialog();
+            }
+            else if(knygaDefault.getCheck1() !=knygaSubmitted.getCheck1()){
+                createDialog();
+            }
+            else if(knygaDefault.getCheck2() != knygaSubmitted.getCheck2()){
+                createDialog();
+            }
+            else if(knygaDefault.getCheck3() != knygaSubmitted.getCheck3()){
+                createDialog();
+            }
+            else if(knygaDefault.getCheck4() != knygaSubmitted.getCheck4()){
+                createDialog();
+            }
+            else if(!knygaDefault.getRarity().equals(knygaSubmitted.getRarity())){
+                createDialog();
+            }
+            else if(!knygaDefault.getCover().equals(knygaSubmitted.getCover().toString())){
+                createDialog();
+            }
+            else if(knygaDefault.getPages() != knygaSubmitted.getPages())
+            {
+                createDialog();
+            }
+            else{
                 checkactivity = true;
-                Intent intent3 = new Intent(Add_activity.this, Dashboard_activity.class);
-                    startActivity(intent3);
-                    finish();
-                }
-        });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if(update > -1) {
-                    if(check1.isChecked()){
-                        check1.setChecked(true);
-                        check1B = 1;
-                    }else{
-                        check1B = 0;
-                    }
-                    if(check2.isChecked()){
-                        check2.setChecked(true);
-                        check2B = 1;
-                    }else{
-                        check2B = 0;
-                    }
-                    if(check3.isChecked()){
-                        check3.setChecked(true);
-                        check3B = 1;
-                    }else{
-                        check3B = 0;
-                    }
-                    if(check4.isChecked()){
-                        check4.setChecked(true);
-                        check4B = 1;
-                    }else{
-                        check4B = 0;
-                    }
-                    selectedId = radioGroup.getCheckedRadioButtonId();
-                    radioButton = (RadioButton) findViewById(selectedId);
-                    if (!Books.get(update).getName().equals(name.getText().toString())) {
-                        createDialog();
-                    } else if (!Books.get(update).getRelease_year().equals(releaseyear.getText().toString())) {
-                        createDialog();
-                    } else if (!Books.get(update).getAuthor().equals(Author.getText().toString())) {
-                        createDialog();
-                    } else if (Books.get(update).getCheck1() != check1B) {
-                        createDialog();
-                    } else if (Books.get(update).getCheck2() != check2B) {
-                        createDialog();
-                    } else if (Books.get(update).getCheck3() != check3B) {
-                        createDialog();
-                    } else if (Books.get(update).getCheck4() != check4B) {
-                        createDialog();
-                    } else if (!Books.get(update).getRarity().equals(Text.toString())) {
-                        createDialog();
-                    } else if (!Books.get(update).getCover().equals(radioButton.getText().toString())) {
-                        createDialog();
-                    } else if (Books.get(update).getPages() != Integer.parseInt(Pages.getText().toString())) {
-                        createDialog();
-                    } else {
-                        checkactivity = true;
-                        Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
-                        startActivity(intent1);
-                        Add_activity.this.finish();
-                    }
-                }else{
-                    if(check1.isChecked()){
-
-                        check1B1 = 1;
-                    }else{
-                        check1B1 = 0;
-                    }
-                    if(check2.isChecked()){
-
-                        check2B1 = 1;
-                    }else{
-                        check2B1 = 0;
-                    }
-                    if(check3.isChecked()){
-
-                        check3B1 = 1;
-                    }else{
-                        check3B1 = 0;
-                    }
-                    if(check4.isChecked()){
-
-                        check4B1 = 1;
-                    }else{
-                        check4B1 = 0;
-                    }
-                    Knyga knygaDefault = new Knyga("","","","Documentary","Common",0,"Hard",1,0,0,0);
-                    selectedId1 = radioGroup.getCheckedRadioButtonId();
-                    radioButton1 = (RadioButton) findViewById(selectedId1);
-
-                    knygaSubmitted = new Knyga(name.getText().toString(),
-                            releaseyear.getText().toString(),
-                            Author.getText().toString(),
-                            checkString,
-                            Text,
-                            Integer.parseInt(Pages.getText().toString()),
-                            radioButton1.getText().toString(),
-                            check1B1,check2B1,check3B1,check4B1);
-                    if (!knygaDefault.getName().equals(name.getText().toString())){
-                        createDialog();
-                    }
-                    else if(!knygaDefault.getRelease_year().equals(releaseyear.getText().toString())){
-                        createDialog();
-                    }
-                    else if(!knygaDefault.getAuthor().equals(Author.getText().toString())){
-                        createDialog();
-                    }
-                    else if(knygaDefault.getCheck1() !=knygaSubmitted.getCheck1()){
-                        createDialog();
-                    }
-                    else if(knygaDefault.getCheck2() != knygaSubmitted.getCheck2()){
-                        createDialog();
-                    }
-                    else if(knygaDefault.getCheck3() != knygaSubmitted.getCheck3()){
-                        createDialog();
-                    }
-                    else if(knygaDefault.getCheck4() != knygaSubmitted.getCheck4()){
-                        createDialog();
-                    }
-                    else if(!knygaDefault.getRarity().equals(knygaSubmitted.getRarity())){
-                        createDialog();
-                    }
-                    else if(!knygaDefault.getCover().equals(knygaSubmitted.getCover().toString())){
-                        createDialog();
-                    }
-                    else if(knygaDefault.getPages() != knygaSubmitted.getPages())
-                    {
-                        createDialog();
-                    }
-                    else{
-                        checkactivity = true;
-                        Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
-                        startActivity(intent1);
-                        Add_activity.this.finish();
-                    }
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
+                startActivity(intent1);
+                Add_activity.this.finish();
+            }
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(!checkactivity) {
-            stopService(svc);
-        }
-    }
-    @Override
-    protected void onUserLeaveHint()
-    {
-        Log.d("onUserLeaveHint","Home button pressed");
-        super.onUserLeaveHint();
-        onPause();
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startService(svc);
-    }
-
-    @Override
-    public void onBackPressed() {
-
-    }
     public void createDialog(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 Add_activity.this);
@@ -417,6 +404,8 @@ public class Add_activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing
+                        Intent intent1 = new Intent(getBaseContext(), Dashboard_activity.class);
+                        startActivity(intent1);
                         Add_activity.this.finish();
                     }
                 });

@@ -1,4 +1,4 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.Service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.example.moksleivis.knygalaboras.R;
 
 /**
  * Created by arvyd on 3/6/2018.

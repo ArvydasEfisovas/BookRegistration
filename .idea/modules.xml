@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Knygalaboras.iml" filepath="$PROJECT_DIR$/Knygalaboras.iml" />
+      <module fileurl="file://C:\Users\arvyd\Desktop\bookregisgithub\Knygalaboras.iml" filepath="C:\Users\arvyd\Desktop\bookregisgithub\Knygalaboras.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

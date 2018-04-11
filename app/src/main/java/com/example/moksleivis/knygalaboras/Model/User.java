@@ -1,4 +1,4 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.Model;
 
 /**
  * Created by arvyd on 1/20/2018.

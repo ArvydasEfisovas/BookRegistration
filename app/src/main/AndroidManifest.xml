@@ -16,7 +16,7 @@
             android:value=".Dashboard_activity"/>
 
 
-        <activity android:name=".Dashboard_activity" android:launchMode="singleTop"
+        <activity android:name=".View.Dashboard_activity" android:launchMode="singleTop"
             android:screenOrientation="portrait">
                    <intent-filter>
                        <action android:name="android.intent.action.SEARCH"/>
@@ -26,7 +26,7 @@
                            android:name="android.app.searchable"
                            android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".Login_activity"
+        <activity android:name=".View.Login_activity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,17 +35,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Register_activity"
+        <activity android:name=".View.Register_activity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".Add_activity"
+        <activity android:name=".View.Add_activity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <service android:enabled="true" android:name=".BackgroundSoundService" />
+        <service android:enabled="true" android:name=".Service.BackgroundSoundService" />
     </application>
 
 </manifest>

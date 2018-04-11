@@ -1,10 +1,13 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.moksleivis.knygalaboras.Model.Knyga;
+import com.example.moksleivis.knygalaboras.Model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,7 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 8;
     // Database Name
     private static final String DATABASE_NAME = "db";
     // Contacts table name
@@ -69,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Adding new user
-    void addUsers(User user) {
+   public  void addUsers(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, user.getName());
@@ -79,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    void addBook(Knyga knyga) {
+    public void addBook(Knyga knyga) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(name, knyga.getName());
@@ -97,20 +100,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    User getContact(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_password,KEY_email}, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        User user = new User(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2),cursor.getString(3));
-        // return user
-        return user;
-    }
-
-    User getUserForLogin(String name, String password) {
+    public User getUserForLogin(String name, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         User user = new User();
         Cursor cursor = db.query(TABLE_USERS, new String[] {
@@ -121,25 +111,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(1), cursor.getString(2));
         }
         return user;
-    }
-
-    public List<User> getAllUsers() {
-        List<User> userList = new ArrayList<User>();
-        String selectQuery = "SELECT  * FROM " + TABLE_USERS;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setID(Integer.parseInt(cursor.getString(0)));
-                user.setName(cursor.getString(1));
-                user.setPassword(cursor.getString(2));
-                user.setEmail(cursor.getString(3));
-                userList.add(user);
-            } while (cursor.moveToNext());
-        }
-        return userList;
     }
 
     public List<Knyga> getAllBooks() {
@@ -169,17 +140,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return bookList;
     }
 
-    public int updateUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, user.getName());
-        values.put(KEY_password, user.getPassword());
-        values.put(KEY_email, user.getEmail());
-        // updating row
-        return db.update(TABLE_USERS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(user.getID()) });
-    }
-
     public void updateBook(Knyga knyga) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -198,28 +158,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                  new String[] { String.valueOf(knyga.getId()+1)});
          db.close();
     }
-
-    public void deleteUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_USERS, KEY_ID + " = ?",
-                new String[] { String.valueOf(user.getID()) });
-        db.close();
-    }
-
     public void deleteBooks(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_BOOKS, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
         db.close();
     }
-
-    public int getUserCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_USERS;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
-        // return count
-        return cursor.getCount();
-    }
-
 }

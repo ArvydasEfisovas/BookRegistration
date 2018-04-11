@@ -1,4 +1,4 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.Controller;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

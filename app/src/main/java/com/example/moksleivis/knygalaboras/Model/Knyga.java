@@ -1,9 +1,10 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.Model;
 
 /**
  * Created by arvyd on 1/21/2018.
  */
 public class Knyga {
+
     private int id;
     private String name;
     private String release_year;

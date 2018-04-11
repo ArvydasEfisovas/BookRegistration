@@ -1,4 +1,4 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.moksleivis.knygalaboras.Service.BackgroundSoundService;
+import com.example.moksleivis.knygalaboras.Model.DatabaseHandler;
+import com.example.moksleivis.knygalaboras.Model.User;
+import com.example.moksleivis.knygalaboras.R;
+import com.example.moksleivis.knygalaboras.Controller.Validation;
 
 /**
  * Created by moksleivis on 2018-01-19.

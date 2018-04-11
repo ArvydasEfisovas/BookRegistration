@@ -1,4 +1,4 @@
-package com.example.moksleivis.knygalaboras;
+package com.example.moksleivis.knygalaboras.View;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.moksleivis.knygalaboras.Model.Knyga;
+import com.example.moksleivis.knygalaboras.R;
+import com.example.moksleivis.knygalaboras.View.Add_activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,6 +68,7 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                    genre = (TextView) itemView.findViewById(R.id.genre);
                    pages = (TextView) itemView.findViewById(R.id.pages);
                       itemView.setOnClickListener(this);
+
                }
 
         @Override
@@ -72,8 +77,9 @@ public class KnygaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             // TODO: siųsti pasirinkto pokemono objektą vietoj id
                    Intent intent = new Intent(context, Add_activity.class);
                    intent.putExtra("item_id_position",  itemPosition);
-                   intent.putExtra("item_id",  Knygos.get(itemPosition).getId());
-                   context.startActivity(intent);
+                   intent.putExtra("item_id",  Knygos.get(itemPosition).getId()-1);
+                    intent.putExtra("item_id_delete",  Knygos.get(itemPosition).getId());
+            context.startActivity(intent);
                     ((Activity)context).finish();
                     }
     }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bookbackground"
     android:orientation="vertical"
-    tools:context="com.example.moksleivis.knygalaboras.Login_activity">
+    tools:context="com.example.moksleivis.knygalaboras.View.Login_activity">
 
     <TextView
         android:id="@+id/textView"
